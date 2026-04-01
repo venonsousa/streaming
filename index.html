@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planos Web Rádio</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #1e90ff;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .plan-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .plan-card h2 {
+      margin-top: 0;
+      color: #1e90ff;
+    }
+
+    .plan-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .plan-card li {
+      margin: 0.5rem 0;
+    }
+
+    .plan-card .price {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-top: 1rem;
+      color: #ff4500;
+    }
+
+    .features {
+      background-color: #fff;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 1000px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .features h2 {
+      color: #1e90ff;
+    }
+
+    .features ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .features li {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .contact {
+      background-color: #1e90ff;
+      color: white;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .contact h2 {
+      margin-top: 0;
+    }
+
+    .contact a {
+      display: inline-block;
+      margin: 0 1rem;
+      text-decoration: none;
+      color: white;
+      font-size: 2rem;
+    }
+
+    footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Planos Web Rádio</h1>
+  <p>Escolha o plano ideal para sua rádio online!</p>
+</header>
+
+<section class="plans-grid">
+  <div class="plan-card">
+    <h2>Plano Iniciante</h2>
+    <ul>
+      <li>250 ouvintes</li>
+      <li>3GB de Auto DJ</li>
+      <li>Streaming estável</li>
+    </ul>
+    <div class="price">R$ 50</div>
+  </div>
+
+  <div class="plan-card">
+    <h2>Plano Super</h2>
+    <ul>
+      <li>500 ouvintes</li>
+      <li>5GB Radio + App + Player + Xat</li>
+    </ul>
+    <div class="price">R$ 100</div>
+  </div>
+
+  <div class="plan-card">
+    <h2>Plano Ouro</h2>
+    <ul>
+      <li>8GB Site + Rádio + Player + Chat + App Android</li>
+    </ul>
+    <div class="price">R$ 150</div>
+  </div>
+</section>
+
+<section class="features">
+  <h2>Diferenciais</h2>
+  <ul>
+    <li>Transmissão 24h sem travar com a logo</li>
+    <li>Aplicativo Android com a logo</li>
+    <li>Chat interativo para ouvintes com a logo</li>
+    <li>Player web rádio de alta qualidade</li>
+  </ul>
+</section>
+
+<section class="contact">
+  <h2>Fale Conosco</h2>
+  <a href="https://wa.me/SEUNUMERO" target="_blank">📱</a>
+  <a href="https://instagram.com/SEUUSUARIO" target="_blank">📸</a>
+  <a href="https://xat.com/SEUXAT" target="_blank">💬</a>
+</section>
+
+<footer>
+  &copy; 2026 Web Rádio. Todos os direitos reservados.
+</footer>
+
+</body>
+</html>
