@@ -1,212 +1,229 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Rádio - Planos</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      background: url('https://images.unsplash.com/photo-1581090700227-8e5b593afc3b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-      background-size: cover;
-      position: relative;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Rádio - Planos</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+    background: url('https://images.unsplash.com/photo-1581090700227-8e5b593afc3b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+  }
 
-    body::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(0,0,0,0.6);
-      z-index: 0;
-    }
+  body::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 0;
+  }
 
-    header, .plans-grid, .features, .contact, footer {
-      position: relative;
-      z-index: 1;
-    }
+  header, .topo, .plans-grid, .features-grid, .contact, footer {
+    position: relative;
+    z-index: 1;
+  }
 
-    /* Topo azul */
-    .topo-azul {
-      background-color: #1e90ff;
-      padding: 3rem 1rem 2rem 1rem;
-      border-bottom-left-radius: 50px;
-      border-bottom-right-radius: 50px;
-    }
+  /* Topo azul até metade do site */
+  .topo {
+    background-color: #1e90ff;
+    padding: 3rem 1rem;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
+  header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
 
-    header p {
-      font-size: 1.2rem;
-    }
+  header p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
 
-    .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      max-width: 1200px;
-      margin: -3rem auto 2rem auto; /* sobe os cards sobre o topo azul */
-      padding: 0 1rem;
-    }
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 2rem;
+  }
 
-    .plan-card {
-      background-color: rgba(255,255,255,0.1);
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-      transition: transform 0.3s, background-color 0.3s;
-      text-align: center;
-    }
+  .plan-card {
+    background-color: rgba(255,255,255,0.1);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: transform 0.3s, background-color 0.3s;
+    text-align: center;
+  }
 
-    .plan-card:hover {
-      transform: translateY(-5px);
-      background-color: rgba(255,255,255,0.2);
-    }
+  .plan-card:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255,255,255,0.2);
+  }
 
-    .plan-card h2 {
-      margin-top: 0;
-      color: #fff;
-    }
+  .plan-card h2 {
+    margin-top: 0;
+    color: #fff;
+  }
 
-    .plan-card ul {
-      list-style: none;
-      padding: 0;
-      margin: 1rem 0;
-    }
+  .plan-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+  }
 
-    .plan-card li {
-      margin: 0.5rem 0;
-    }
+  .plan-card li {
+    margin: 0.5rem 0;
+  }
 
-    .plan-card .price-btn {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.7rem 1.5rem;
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: #1e90ff;
-      background-color: #fff;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: transform 0.3s, background-color 0.3s;
-    }
+  .plan-card .price-btn {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1e90ff;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s, background-color 0.3s;
+  }
 
-    .plan-card .price-btn:hover {
-      transform: scale(1.05);
-      background-color: #f0f0f0;
-    }
+  .plan-card .price-btn:hover {
+    transform: scale(1.05);
+    background-color: #f0f0f0;
+  }
 
-    .features {
-      max-width: 1000px;
-      margin: 3rem auto;
-      text-align: center;
-      padding: 2rem 1rem;
-    }
+  /* Diferenciais em grid cards */
+  .features-grid {
+    max-width: 1000px;
+    margin: 3rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    padding: 0 1rem;
+  }
 
-    .features h2 {
-      color: #1e90ff;
-      margin-bottom: 1.5rem;
-    }
+  .feature-card {
+    background-color: rgba(255,255,255,0.1);
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    transition: transform 0.3s, background-color 0.3s;
+  }
 
-    .features ul {
-      list-style: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-    }
+  .feature-card:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255,255,255,0.2);
+  }
 
-    .features li {
-      background-color: rgba(255,255,255,0.1);
-      padding: 1rem;
-      border-radius: 8px;
-      font-weight: bold;
-    }
+  .feature-card h3 {
+    margin: 0 0 1rem 0;
+    color: #1e90ff;
+  }
 
-    .contact {
-      background-color: rgba(0,0,0,0.7);
-      text-align: center;
-      padding: 2rem 1rem;
-    }
+  .contact {
+    background-color: rgba(0,0,0,0.7);
+    text-align: center;
+    padding: 2rem 1rem;
+  }
 
-    .contact h2 {
-      color: #1e90ff;
-      margin-bottom: 1rem;
-    }
+  .contact h2 {
+    color: #1e90ff;
+    margin-bottom: 1rem;
+  }
 
-    .contact a {
-      display: inline-block;
-      margin: 0 1rem;
-      font-size: 2rem;
-      color: #fff;
-      text-decoration: none;
-      transition: transform 0.3s;
-    }
+  .contact a {
+    display: inline-block;
+    margin: 0 1rem;
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.3s;
+  }
 
-    .contact a:hover {
-      transform: scale(1.2);
-    }
+  .contact a:hover {
+    transform: scale(1.2);
+  }
 
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: rgba(0,0,0,0.8);
-    }
-  </style>
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.8);
+  }
+</style>
 </head>
 <body>
 
-<div class="topo-azul">
+<div class="topo">
   <header>
     <h1>Web Rádio</h1>
     <p>Escolha o plano ideal e comece sua transmissão agora!</p>
   </header>
+
+  <section class="plans-grid">
+    <div class="plan-card">
+      <h2>Plano Iniciante</h2>
+      <ul>
+        <li>250 ouvintes</li>
+        <li>3GB de Auto DJ</li>
+        <li>Streaming estável</li>
+      </ul>
+      <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 50</a>
+    </div>
+
+    <div class="plan-card">
+      <h2>Plano Super</h2>
+      <ul>
+        <li>500 ouvintes</li>
+        <li>5GB Radio + App + Player + Xat</li>
+      </ul>
+      <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 100</a>
+    </div>
+
+    <div class="plan-card">
+      <h2>Plano Ouro</h2>
+      <ul>
+        <li>8GB Site + Rádio + Player + Chat + App Android</li>
+      </ul>
+      <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 150</a>
+    </div>
+  </section>
 </div>
 
-<section class="plans-grid">
-  <div class="plan-card">
-    <h2>Plano Iniciante</h2>
-    <ul>
-      <li>250 ouvintes</li>
-      <li>3GB de Auto DJ</li>
-      <li>Streaming estável</li>
-    </ul>
-    <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 50</a>
+<section class="features-grid">
+  <div class="feature-card">
+    <h3>Transmissão 24h</h3>
+    Transmissão sem travar com a logo
   </div>
-
-  <div class="plan-card">
-    <h2>Plano Super</h2>
-    <ul>
-      <li>500 ouvintes</li>
-      <li>5GB Radio + App + Player + Xat</li>
-    </ul>
-    <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 100</a>
+  <div class="feature-card">
+    <h3>Aplicativo Android</h3>
+    App disponível com a logo
   </div>
-
-  <div class="plan-card">
-    <h2>Plano Ouro</h2>
-    <ul>
-      <li>8GB Site + Rádio + Player + Chat + App Android</li>
-    </ul>
-    <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 150</a>
+  <div class="feature-card">
+    <h3>Chat Interativo</h3>
+    Interação com ouvintes com a logo
   </div>
-</section>
-
-<section class="features">
-  <h2>Diferenciais</h2>
-  <ul>
-    <li>Transmissão 24h sem travar com a logo</li>
-    <li>Aplicativo Android com a logo</li>
-    <li>Chat interativo para ouvintes com a logo</li>
-    <li>Player web rádio de alta qualidade</li>
-  </ul>
+  <div class="feature-card">
+    <h3>Player Web Rádio</h3>
+    Alta qualidade de áudio
+  </div>
 </section>
 
 <section class="contact">
