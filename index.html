@@ -3,46 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planos Web Rádio</title>
+  <title>Web Rádio - Planos</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f4f4f4;
-      color: #333;
+      font-family: Arial, sans-serif;
+      color: #fff;
+      background: url('https://images.unsplash.com/photo-1581090700227-8e5b593afc3b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+      background-size: cover;
+      position: relative;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.6);
+      z-index: 0;
+    }
+
+    header, .plans-grid, .features, .contact, footer {
+      position: relative;
+      z-index: 1;
     }
 
     header {
-      background-color: #1e90ff;
-      color: white;
-      padding: 2rem;
       text-align: center;
+      padding: 3rem 1rem;
     }
 
-    h1 {
-      margin: 0;
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    header p {
+      font-size: 1.2rem;
     }
 
     .plans-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
+      gap: 2rem;
       max-width: 1200px;
-      margin: auto;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
 
     .plan-card {
-      background-color: white;
+      background-color: rgba(255,255,255,0.1);
+      padding: 2rem;
       border-radius: 10px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: transform 0.3s, background-color 0.3s;
+      text-align: center;
     }
 
     .plan-card:hover {
       transform: translateY(-5px);
+      background-color: rgba(255,255,255,0.2);
     }
 
     .plan-card h2 {
@@ -53,6 +73,7 @@
     .plan-card ul {
       list-style: none;
       padding: 0;
+      margin: 1rem 0;
     }
 
     .plan-card li {
@@ -62,72 +83,73 @@
     .plan-card .price {
       font-size: 1.5rem;
       font-weight: bold;
-      margin-top: 1rem;
       color: #ff4500;
+      margin-top: 1rem;
     }
 
     .features {
-      background-color: #fff;
-      padding: 2rem;
-      margin: 2rem auto;
       max-width: 1000px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin: 3rem auto;
       text-align: center;
+      padding: 2rem 1rem;
     }
 
     .features h2 {
       color: #1e90ff;
+      margin-bottom: 1.5rem;
     }
 
     .features ul {
       list-style: none;
       padding: 0;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 1rem;
-      margin-top: 1rem;
     }
 
     .features li {
-      background-color: #f4f4f4;
+      background-color: rgba(255,255,255,0.1);
       padding: 1rem;
       border-radius: 8px;
       font-weight: bold;
     }
 
     .contact {
-      background-color: #1e90ff;
-      color: white;
-      padding: 2rem;
+      background-color: rgba(0,0,0,0.7);
       text-align: center;
+      padding: 2rem 1rem;
     }
 
     .contact h2 {
-      margin-top: 0;
+      color: #1e90ff;
+      margin-bottom: 1rem;
     }
 
     .contact a {
       display: inline-block;
       margin: 0 1rem;
-      text-decoration: none;
-      color: white;
       font-size: 2rem;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.3s;
+    }
+
+    .contact a:hover {
+      transform: scale(1.2);
     }
 
     footer {
-      background-color: #333;
-      color: white;
       text-align: center;
       padding: 1rem;
+      background-color: rgba(0,0,0,0.8);
     }
   </style>
 </head>
 <body>
 
 <header>
-  <h1>Planos Web Rádio</h1>
-  <p>Escolha o plano ideal para sua rádio online!</p>
+  <h1>Web Rádio</h1>
+  <p>Escolha o plano ideal e comece sua transmissão agora!</p>
 </header>
 
 <section class="plans-grid">
@@ -171,9 +193,9 @@
 
 <section class="contact">
   <h2>Fale Conosco</h2>
-  <a href="https://wa.me/SEUNUMERO" target="_blank">📱</a>
-  <a href="https://instagram.com/SEUUSUARIO" target="_blank">📸</a>
-  <a href="https://xat.com/SEUXAT" target="_blank">💬</a>
+  <a href="https://wa.me/SEUNUMERO" target="_blank">📱 WhatsApp</a>
+  <a href="https://instagram.com/SEUUSUARIO" target="_blank">📸 Instagram</a>
+  <a href="https://xat.com/SEUXAT" target="_blank">💬 Xat</a>
 </section>
 
 <footer>
