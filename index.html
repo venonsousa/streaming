@@ -17,8 +17,6 @@ body{
 /* CANVAS */
 #bgCanvas{
   position:fixed;
-  top:0;
-  left:0;
   width:100%;
   height:100%;
   z-index:1;
@@ -36,7 +34,7 @@ body::after{
 }
 
 /* CAMADAS */
-.player, .topo, .plans, .streaming-box, nav{
+.player, .topo, .plans, nav{
   position:relative;
   z-index:3;
 }
@@ -82,12 +80,24 @@ nav a:hover{color:#ffcc00;}
 
 /* PLANOS */
 .plans{
+  position:relative;
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
   gap:2rem;
-  padding:2rem;
+  padding:3rem 2rem;
 }
 
+/* IMAGEM NOS PLANOS */
+.img-planos{
+  position:absolute;
+  top:-40px;
+  left:10px;
+  width:130px;
+  z-index:5;
+  filter: drop-shadow(0 0 12px rgba(0,150,255,0.8));
+}
+
+/* CARDS */
 .plan-card{
   background:rgba(0,0,0,0.65);
   padding:2rem;
@@ -109,34 +119,10 @@ nav a:hover{color:#ffcc00;}
   border-radius:10px;
 }
 
-/* STREAM */
-.streaming-box{
-  position:relative;
-  padding:4rem 1rem;
-  text-align:center;
-}
-
-.stream-img{
-  position:absolute;
-  left:20px;
-  top:50%;
-  transform:translateY(-50%);
-  width:120px;
-  filter: drop-shadow(0 0 10px rgba(0,150,255,0.7));
-}
-
-.stream-card{
-  background:rgba(0,0,0,0.6);
-  padding:2rem;
-  border-radius:15px;
-  display:inline-block;
-}
-
 /* RESPONSIVO */
 @media(max-width:768px){
-  .stream-img{
+  .img-planos{
     position:static;
-    transform:none;
     display:block;
     margin:0 auto 20px;
   }
@@ -152,7 +138,6 @@ nav a:hover{color:#ffcc00;}
 <nav>
   <a href="#">Início</a>
   <a href="#planos">Planos</a>
-  <a href="#stream">Streaming</a>
 </nav>
 
 <!-- PLAYER -->
@@ -171,6 +156,8 @@ nav a:hover{color:#ffcc00;}
 <!-- PLANOS -->
 <section id="planos" class="plans">
 
+  <img src="https://xatimg.com/image/vo5Iara9Kemo.png" class="img-planos">
+
   <div class="plan-card">
     <h2>Plano Iniciante</h2>
     <div class="preco">R$ 50</div>
@@ -187,17 +174,6 @@ nav a:hover{color:#ffcc00;}
     <h2>Plano Ouro</h2>
     <div class="preco">R$ 150</div>
     <a href="#" class="btn">Contratar</a>
-  </div>
-
-</section>
-
-<!-- STREAM -->
-<section id="stream" class="streaming-box">
-
-  <img src="https://xatimg.com/image/vo5Iara9Kemo.png" class="stream-img">
-
-  <div class="stream-card">
-    🎧 Sua rádio 24h no ar
   </div>
 
 </section>
