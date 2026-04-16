@@ -3,252 +3,146 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Rádio Sertaneja Premium</title>
+<meta name="description" content="Rádio Sertaneja Premium - Streaming 24h">
+
+<link rel="icon" href="/favicon.svg">
 
 <style>
 body{
   margin:0;
   font-family:Arial;
+  background:#0f0f0f;
   color:#fff;
-  background: url('https://xatimg.com/image/HFKV3V80ctHD.png') no-repeat center center fixed;
-  background-size: cover;
 }
 
-/* CANVAS */
-#bgCanvas{
-  position:fixed;
-  width:100%;
-  height:100%;
-  z-index:1;
-  pointer-events:none;
-}
-
-/* overlay */
-body::after{
-  content:"";
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:rgba(0,0,0,0.4);
-  z-index:2;
-}
-
-/* CAMADAS */
-.player, .topo, .plans, nav{
-  position:relative;
-  z-index:3;
-}
-
-/* MENU */
-nav{
+/* HEADER */
+header{
   position:fixed;
   top:0;
   width:100%;
-  display:flex;
-  justify-content:center;
-  gap:2rem;
-  padding:10px;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.7);
   backdrop-filter:blur(10px);
+  padding:10px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-nav a{
+header a{
   color:#fff;
+  margin:0 10px;
   text-decoration:none;
-  font-weight:bold;
 }
 
-nav a:hover{color:#ffcc00;}
+/* HERO */
+.hero{
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
 
 /* PLAYER */
 .player{
-  position:fixed;
-  top:50px;
-  width:100%;
-  background:linear-gradient(90deg,#8B4513,#d2691e);
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-}
-
-.spacer{height:120px;}
-
-.topo{
-  text-align:center;
-  padding:4rem 1rem;
+  background:#1c1c1c;
+  padding:20px;
+  border-radius:12px;
 }
 
 /* PLANOS */
-.plans{
-  position:relative;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:2rem;
-  padding:3rem 2rem;
-}
-
-/* IMAGEM NOS PLANOS */
-.img-planos{
-  position:absolute;
-  top:-40px;
-  left:10px;
-  width:130px;
-  z-index:5;
-  filter: drop-shadow(0 0 12px rgba(0,150,255,0.8));
-}
-
-/* CARDS */
-.plan-card{
-  background:rgba(0,0,0,0.65);
-  padding:2rem;
-  border-radius:20px;
+.planos{
+  padding:80px 20px;
   text-align:center;
 }
 
-.preco{
-  font-size:2rem;
-  color:#ffcc00;
+.cards{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
-.btn{
-  display:inline-block;
-  margin-top:1rem;
-  padding:10px 20px;
-  background:#ffcc00;
-  color:#000;
-  border-radius:10px;
+.card{
+  background:#1c1c1c;
+  padding:20px;
+  border-radius:12px;
+  width:250px;
 }
 
-/* RESPONSIVO */
-@media(max-width:768px){
-  .img-planos{
-    position:static;
-    display:block;
-    margin:0 auto 20px;
-  }
+button{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  background:#00c853;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* FOOTER */
+footer{
+  padding:20px;
+  text-align:center;
+  background:#111;
 }
 </style>
+
 </head>
 
 <body>
 
-<canvas id="bgCanvas"></canvas>
-
-<!-- MENU -->
-<nav>
-  <a href="#">Início</a>
-  <a href="#planos">Planos</a>
-</nav>
-
-<!-- PLAYER -->
-<div class="player">
-  <div id="musica">🎵 Carregando...</div>
-  <button onclick="toggleRadio()">🔇</button>
-</div>
-
-<div class="spacer"></div>
-
-<!-- TOPO -->
-<div class="topo">
-  <h1>🤠 Rádio Sertaneja Premium</h1>
-</div>
-
-<!-- PLANOS -->
-<section id="planos" class="plans">
-
-  <img src="https://xatimg.com/image/vo5Iara9Kemo.png" class="img-planos">
-
-  <div class="plan-card">
-    <h2>Plano Iniciante</h2>
-    <div class="preco">R$ 50</div>
-    <a href="#" class="btn">Contratar</a>
+<header>
+  <div>🎵 Rádio Sertaneja</div>
+  <div>
+    <a href="#">Início</a>
+    <a href="#planos">Planos</a>
   </div>
+</header>
 
-  <div class="plan-card">
-    <h2>Plano Super</h2>
-    <div class="preco">R$ 100</div>
-    <a href="#" class="btn">Contratar</a>
+<section class="hero">
+  <div class="player">
+    <h2>Ao vivo agora</h2>
+    <audio controls autoplay>
+      <source src="https://stm.igng.com.br:7018/stream" type="audio/mpeg">
+    </audio>
   </div>
-
-  <div class="plan-card">
-    <h2>Plano Ouro</h2>
-    <div class="preco">R$ 150</div>
-    <a href="#" class="btn">Contratar</a>
-  </div>
-
 </section>
 
-<script>
-let audio=new Audio("https://stm.igng.com.br:7018/stream");
-audio.play();
-let tocando=true;
+<section id="planos" class="planos">
+  <h2>Planos</h2>
 
-function toggleRadio(){
-  tocando?audio.pause():audio.play();
-  tocando=!tocando;
-}
+  <div class="cards">
 
-/* MUSICA */
-async function atualizarMusica(){
-  let r=await fetch("http://igng.com.br/api-json/TnpBeE9BPT0rWg==");
-  let d=await r.json();
-  musica.innerText=d.musica||"...";
-}
-setInterval(atualizarMusica,5000);
-atualizarMusica();
+    <div class="card">
+      <h3>Iniciante</h3>
+      <h2>R$ 50</h2>
+      <p>Qualidade padrão</p>
+      <button>Contratar</button>
+    </div>
 
-/* CANVAS */
-const canvas=document.getElementById("bgCanvas");
-const ctx=canvas.getContext("2d");
-let particles=[];
-let mouse={x:0,y:0};
+    <div class="card">
+      <h3>Super</h3>
+      <h2>R$ 100</h2>
+      <p>Qualidade HD</p>
+      <button>Contratar</button>
+    </div>
 
-function resize(){
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-}
-resize();
+    <div class="card">
+      <h3>Ouro</h3>
+      <h2>R$ 150</h2>
+      <p>Sem anúncios</p>
+      <button>Contratar</button>
+    </div>
 
-window.onmousemove=e=>{
-  mouse.x=e.x;
-  mouse.y=e.y;
-};
+  </div>
+</section>
 
-for(let i=0;i<100;i++){
-  particles.push({
-    x:Math.random()*canvas.width,
-    y:Math.random()*canvas.height,
-    vx:(Math.random()-0.5),
-    vy:(Math.random()-0.5),
-    size:Math.random()*2
-  });
-}
-
-function animate(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-
-  particles.forEach(p=>{
-    p.x+=p.vx;
-    p.y+=p.vy;
-
-    let dx=p.x-mouse.x;
-    let dy=p.y-mouse.y;
-
-    if(Math.sqrt(dx*dx+dy*dy)<150){
-      p.x+=dx*0.03;
-      p.y+=dy*0.03;
-    }
-
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fillStyle="rgba(0,150,255,0.9)";
-    ctx.fill();
-  });
-
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
+<footer>
+  © 2026 Rádio Sertaneja Premium
+</footer>
 
 </body>
 </html>
