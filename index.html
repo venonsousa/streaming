@@ -1,174 +1,59 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rádio Premium</title>
+<div style="
+background:linear-gradient(135deg,#ffd700,#ffae00);
+color:#000;
+padding:30px;
+border-radius:20px;
+width:280px;
+text-align:center;
+box-shadow:0 10px 35px rgba(0,0,0,0.6);
+">
 
-<style>
-body{
-  margin:0;
-  font-family:Arial;
-  background:#121212;
-  color:#fff;
-}
+<h3 style="margin:0;font-size:22px;">👑 Plano OURO</h3>
 
-/* PLANOS */
-.planos{
-  padding:60px 20px;
-  text-align:center;
-}
+<h1 style="font-size:40px;margin:10px 0;">R$ 149,90</h1>
+<p style="margin:0 0 20px 0;">/mês</p>
 
-.cards{
-  display:flex;
-  gap:20px;
-  flex-wrap:wrap;
-  justify-content:center;
-}
+<ul style="list-style:none;padding:0;text-align:left;font-size:14px">
 
-.card{
-  background:#1c1c1c;
-  padding:25px;
-  border-radius:15px;
-  width:260px;
-}
+<li>🎵 Qualidade máxima (320kbps)</li>
+<li>🚫 Sem anúncios</li>
+<li>👑 Suporte VIP 24h</li>
+<li>🎤 Conteúdo exclusivo</li>
+<li>⬇ Download de músicas</li>
+<li>♾ Ouvintes ilimitados</li>
 
-.pro{
-  background:#1db954;
-  color:#000;
-  transform:scale(1.05);
-}
+</ul>
 
-/* BOTÃO */
-button{
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  margin-top:10px;
-}
+<br>
 
-/* LOGIN */
-.login{
-  padding:40px;
-  text-align:center;
-}
-
-/* WHATS FLOAT */
-.whatsapp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  background:#25D366;
-  color:#fff;
-  padding:15px;
-  border-radius:50%;
-  font-size:20px;
-  text-decoration:none;
-}
-</style>
-</head>
-
-<body>
-
-<!-- PLANOS -->
-<section class="planos">
-
-<h2>Escolha seu Plano</h2>
-
-<div class="cards">
-
-<!-- BASICO -->
-<div class="card">
-  <h3>Básico</h3>
-  <h1>R$ 49,90</h1>
-  <p>Até 100 ouvintes</p>
-
-  <a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
-    <button style="background:#1db954;color:#fff">
-      Contratar com PIX
-    </button>
-  </a>
-
-  <a href="https://wa.me/5599999999999?text=Contratei%20o%20plano%20Básico" target="_blank">
-    <button style="background:#25D366;color:#fff">
-      Já paguei
-    </button>
-  </a>
-</div>
-
-<!-- PRO -->
-<div class="card pro">
-  <h3>🔥 PRO</h3>
-  <h1>R$ 99,90</h1>
-  <p>Até 500 ouvintes</p>
-
-  <a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
-    <button style="background:#000;color:#fff">
-      Assinar Agora
-    </button>
-  </a>
-
-  <a href="https://wa.me/5599999999999?text=Contratei%20o%20plano%20PRO" target="_blank">
-    <button style="background:#fff;color:#000">
-      Já paguei
-    </button>
-  </a>
-</div>
-
-<!-- PREMIUM -->
-<div class="card">
-  <h3>Premium</h3>
-  <h1>R$ 149,90</h1>
-  <p>Ilimitado</p>
-
-  <a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
-    <button style="background:#1db954;color:#fff">
-      Contratar com PIX
-    </button>
-  </a>
-
-  <a href="https://wa.me/5599999999999?text=Contratei%20o%20plano%20Premium" target="_blank">
-    <button style="background:#25D366;color:#fff">
-      Já paguei
-    </button>
-  </a>
-</div>
-
-</div>
-</section>
-
-<!-- ÁREA DO CLIENTE -->
-<section class="login">
-
-<h2>Área do Cliente</h2>
-
-<input id="user" placeholder="Usuário" style="padding:10px;width:200px"><br><br>
-<input id="pass" type="password" placeholder="Senha" style="padding:10px;width:200px"><br><br>
-
-<button onclick="login()">Entrar</button>
-
-</section>
-
-<!-- WHATSAPP FLUTUANTE -->
-<a href="https://wa.me/5599999999999?text=Preciso%20de%20suporte" 
-   class="whatsapp" target="_blank">
-   💬
+<a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
+<button style="
+width:100%;
+padding:12px;
+background:#000;
+color:#fff;
+border:none;
+border-radius:10px;
+cursor:pointer;
+font-weight:bold;
+">
+Assinar com PIX
+</button>
 </a>
 
-<script>
-function login(){
-  let u = document.getElementById("user").value;
-  let p = document.getElementById("pass").value;
+<a href="https://wa.me/5599999999999?text=Contratei%20o%20Plano%20OURO" target="_blank">
+<button style="
+width:100%;
+padding:10px;
+margin-top:10px;
+background:#fff;
+color:#000;
+border:none;
+border-radius:10px;
+cursor:pointer;
+">
+Já paguei
+</button>
+</a>
 
-  if(u === "admin" && p === "123"){
-    alert("Login OK");
-  }else{
-    alert("Dados inválidos");
-  }
-}
-</script>
-
-</body>
-</html>
+</div>
