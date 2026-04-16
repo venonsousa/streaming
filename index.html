@@ -3,14 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rádio Sertaneja</title>
+<title>Rádio Sertaneja Premium</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial;
-  background:linear-gradient(to bottom,#3b1f0f,#000);
   color:#fff;
+  background: url('https://xatimg.com/image/LID6lYza9A0b.png') no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* overlay */
+body::after{
+  content:"";
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.65);
+  z-index:-1;
 }
 
 /* PLAYER */
@@ -20,24 +33,37 @@ body{
   width:100%;
   background:linear-gradient(90deg,#8B4513,#d2691e);
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:12px;
+  justify-content:space-between;
+  padding:10px;
   z-index:999;
+}
+
+.player img{
+  width:60px;
+  height:60px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.player .info{
+  flex:1;
+  padding:0 10px;
 }
 
 .player button{
   background:#ffcc00;
   border:none;
-  color:#000;
-  padding:8px 15px;
+  padding:8px 12px;
   border-radius:8px;
-  font-weight:bold;
   cursor:pointer;
+  font-weight:bold;
 }
 
-.info{text-align:right;}
-.live{color:red;font-weight:bold;}
+.live{
+  color:#ff3b3b;
+  font-weight:bold;
+}
 
 .spacer{height:80px;}
 
@@ -45,74 +71,8 @@ body{
 .topo{
   text-align:center;
   padding:4rem 1rem;
-  background:linear-gradient(135deg,#8B4513,#5a2e12);
-}
-
-/* PLANOS */
-.plans-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:2rem;
-  padding:2rem;
-}
-
-.plan-card{
-  background:rgba(255,255,255,0.1);
-  padding:2rem;
-  border-radius:10px;
-  text-align:center;
-}
-
-.price-btn{
-  background:#ffcc00;
-  padding:10px;
-  display:inline-block;
-  margin-top:10px;
-  border-radius:8px;
-  color:#000;
-  text-decoration:none;
-}
-
-/* SECTIONS */
-.section{
-  padding:40px;
-  text-align:center;
-}
-
-/* POWERS */
-.power-card{
-  display:inline-block;
-  margin:10px;
-  padding:15px;
-  background:rgba(255,255,255,0.1);
-  border-radius:10px;
-  width:120px;
-}
-
-.power-new{
-  animation: aparecer 0.6s ease;
-  border:2px solid #ffcc00;
-}
-
-@keyframes aparecer{
-  0%{transform:scale(0.5);opacity:0;}
-  100%{transform:scale(1);opacity:1;}
-}
-
-.badge{
-  background:red;
-  padding:2px 6px;
-  font-size:10px;
-  border-radius:5px;
-}
-
-/* COUNTDOWN */
-#countdownBox{
-  background:rgba(255,255,255,0.1);
-  padding:20px;
-  border-radius:10px;
-  display:inline-block;
-  font-size:22px;
+  background:rgba(139,69,19,0.7);
+  backdrop-filter: blur(5px);
 }
 </style>
 </head>
@@ -121,214 +81,113 @@ body{
 
 <!-- PLAYER -->
 <div class="player">
-  <button onclick="toggleRadio()">▶️ Tocar</button>
+  <img id="capa" src="https://via.placeholder.com/60">
+
   <div class="info">
     <div id="status">Carregando...</div>
     <div id="musica">🎵 Carregando...</div>
   </div>
+
+  <button onclick="toggleRadio()">🔇 Desligar</button>
 </div>
 
 <div class="spacer"></div>
 
 <!-- TOPO -->
 <div class="topo">
-  <h1>🤠 Rádio Sertaneja</h1>
-  <p>O melhor do sertanejo 24h</p>
-</div>
-
-<!-- PLANOS -->
-<section class="plans-grid">
-  <div class="plan-card">
-    <h2>Plano Iniciante</h2>
-    <p>250 ouvintes<br>3GB AutoDJ</p>
-    <a href="#" class="price-btn">R$ 50</a>
-  </div>
-
-  <div class="plan-card">
-    <h2>Plano Super</h2>
-    <p>500 ouvintes<br>App + Player + Xat</p>
-    <a href="#" class="price-btn">R$ 100</a>
-  </div>
-
-  <div class="plan-card">
-    <h2>Plano Ouro</h2>
-    <p>Site + Rádio + App</p>
-    <a href="#" class="price-btn">R$ 150</a>
-  </div>
-</section>
-
-<!-- COUNTDOWN -->
-<div class="section">
-  <h2>⏳ Próximo Power</h2>
-  <div id="countdownBox">Carregando...</div>
-</div>
-
-<!-- POWERS -->
-<div class="section">
-  <h2>🔥 Últimos Powers</h2>
-  <div id="xatPowers"></div>
-</div>
-
-<!-- HISTÓRICO -->
-<div class="section">
-  <h2>🧨 Últimos Lançamentos</h2>
-  <div id="historicoPowers"></div>
-</div>
-
-<!-- PROMOT -->
-<div class="section">
-  <h2>💬 Xats em Destaque (BR)</h2>
-  <div id="xatPromot"></div>
+  <h1>🤠 Rádio Sertaneja Premium</h1>
+  <p>O melhor do sertanejo 24h sem parar</p>
 </div>
 
 <script>
-let audio=new Audio("https://stm.igng.com.br:7018/stream");
-let tocando=false;
+let audio = new Audio("https://stm.igng.com.br:7018/stream");
+audio.play();
+let tocando = true;
 
 function toggleRadio(){
-  if(!tocando){
-    audio.play();
-    tocando=true;
-    event.target.innerText="⏸️ Pausar";
-  }else{
+  if(tocando){
     audio.pause();
-    tocando=false;
-    event.target.innerText="▶️ Tocar";
+    tocando = false;
+    event.target.innerText = "▶️ Ligar";
+  }else{
+    audio.play();
+    tocando = true;
+    event.target.innerText = "🔇 Desligar";
   }
 }
 
 /* MUSICA API */
 async function atualizarMusica(){
   try{
-    let r=await fetch("http://igng.com.br/api-json/TnpBeE9BPT0rWg==");
-    let d=await r.json();
-    let nome=d.musica||d.title||"Sem info";
+    let r = await fetch("http://igng.com.br/api-json/TnpBeE9BPT0rWg==");
+    let d = await r.json();
+
+    let nome = d.musica || d.title || "Desconhecido";
+
+    let artista="", musica="";
 
     if(nome.includes("-")){
-      let [a,m]=nome.split("-");
-      musica.innerHTML=`🎤 <b>${a}</b> - ${m}`;
+      [artista, musica] = nome.split("-");
+      musicaEl.innerHTML = `🎤 <b>${artista}</b> - ${musica}`;
     }else{
-      musica.innerText=nome;
+      musicaEl.innerText = nome;
+      musica = nome;
     }
 
+    buscarCapa(artista + " " + musica);
+
   }catch{
-    musica.innerText="Erro música";
+    musicaEl.innerText = "Erro ao carregar música";
   }
 }
-setInterval(atualizarMusica,5000);
-atualizarMusica();
+
+let musicaEl = document.getElementById("musica");
+
+/* CAPA */
+async function buscarCapa(busca){
+  try{
+    let r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busca)}&limit=1`);
+    let d = await r.json();
+
+    if(d.results.length > 0){
+      document.getElementById("capa").src = d.results[0].artworkUrl100;
+    }
+  }catch{}
+}
 
 /* STATUS */
 async function atualizarStatus(){
   try{
-    let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
-    let d=await r.json();
-    let s=d.icestats.source;
+    let r = await fetch("https://stm.igng.com.br:7018/status-json.xsl");
+    let d = await r.json();
+    let s = d.icestats.source;
 
-    let isLive=(
-      s.server_name.toLowerCase().includes("live")||
-      s.title.toLowerCase().includes("ao vivo")||
+    let isLive = (
+      s.server_name.toLowerCase().includes("live") ||
+      s.title.toLowerCase().includes("ao vivo") ||
       !s.title.includes(" - ")
     );
 
-    status.innerHTML=isLive?"🔴 AO VIVO":"🎵 Tocando";
-    status.className=isLive?"live":"";
+    let status = document.getElementById("status");
+
+    if(isLive){
+      status.innerHTML = "🔴 AO VIVO AGORA";
+      status.className = "live";
+    }else{
+      status.innerHTML = "🎵 Tocando agora";
+      status.className = "";
+    }
 
   }catch{
-    status.innerText="Offline";
+    document.getElementById("status").innerText = "Offline";
   }
 }
-setInterval(atualizarStatus,5000);
+
+setInterval(atualizarMusica, 5000);
+setInterval(atualizarStatus, 5000);
+
+atualizarMusica();
 atualizarStatus();
-
-/* COUNTDOWN */
-let tempo=0;
-
-async function loadCountdown(){
-  try{
-    let r=await fetch("https://api.xatblog.net/countdown");
-    let d=await r.json();
-    tempo=d.countdown||d.time||0;
-  }catch{}
-}
-
-function updateCountdown(){
-  if(tempo<=0){
-    countdownBox.innerText="🔥 Novo power!";
-    return;
-  }
-  let h=Math.floor(tempo/3600);
-  let m=Math.floor((tempo%3600)/60);
-  let s=tempo%60;
-  countdownBox.innerText=`${h}h ${m}m ${s}s`;
-  tempo--;
-}
-
-setInterval(loadCountdown,30000);
-setInterval(updateCountdown,1000);
-loadCountdown();
-
-/* POWERS + HISTORICO */
-let hist=[];
-
-async function loadPowers(){
-  try{
-    let r=await fetch("https://api.xatblog.net/latest");
-    let d=await r.json();
-
-    xatPowers.innerHTML="";
-
-    d.slice(0,6).forEach(p=>{
-      let div=document.createElement("div");
-      div.className="power-card";
-      div.innerHTML=`🔥 ${p.name}<br>${p.image?`<img src="${p.image}">`:""}`;
-      xatPowers.appendChild(div);
-    });
-
-    d.forEach(p=>{
-      if(hist.includes(p.name)) return;
-      hist.push(p.name);
-
-      let div=document.createElement("div");
-      div.className="power-card power-new";
-      div.innerHTML=`🔥 ${p.name} <span class="badge">NOVO</span><br>${p.image?`<img src="${p.image}">`:""}`;
-
-      historicoPowers.prepend(div);
-
-      setTimeout(()=>div.querySelector(".badge")?.remove(),5000);
-
-      if(historicoPowers.children.length>15){
-        historicoPowers.removeChild(historicoPowers.lastChild);
-      }
-    });
-
-  }catch{}
-}
-
-setInterval(loadPowers,20000);
-loadPowers();
-
-/* PROMOT */
-async function loadPromot(){
-  try{
-    let r=await fetch("https://xat.com/json/promoted.php");
-    let d=await r.json();
-
-    xatPromot.innerHTML="";
-
-    d.forEach(c=>{
-      if(c.name.toLowerCase().includes("br")){
-        let div=document.createElement("div");
-        div.innerText="💬 "+c.name;
-        xatPromot.appendChild(div);
-      }
-    });
-
-  }catch{}
-}
-
-setInterval(loadPromot,20000);
-loadPromot();
 </script>
 
 </body>
