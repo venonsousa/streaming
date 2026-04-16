@@ -21,8 +21,8 @@ body{
   width:100%;
   background:#0d2b4f;
   display:flex;
-  align-items:center;
   justify-content:space-between;
+  align-items:center;
   padding:10px 20px;
   z-index:999;
 }
@@ -36,7 +36,7 @@ body{
   cursor:pointer;
 }
 
-.player .info{
+.info{
   font-size:14px;
 }
 
@@ -45,27 +45,47 @@ body{
   font-weight:bold;
 }
 
-/* ESPAÇO PRA NÃO FICAR POR BAIXO DO PLAYER */
 .spacer{
   height:70px;
 }
 
-/* PIX */
-.pix{
+/* PLANOS */
+.topo{
   text-align:center;
-  padding:40px 20px;
+  padding:3rem 1rem;
+  background:linear-gradient(135deg,#0d2b4f,#1e3f6f);
 }
 
-.pix textarea{
-  width:90%;
-  height:100px;
+.plans-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:2rem;
+  padding:2rem;
 }
 
-.pix img{
-  margin-top:20px;
+.plan-card{
+  background:rgba(255,255,255,0.1);
+  padding:2rem;
+  border-radius:10px;
+  text-align:center;
+  transition:0.3s;
 }
 
-/* RESTO */
+.plan-card:hover{
+  transform:translateY(-5px);
+}
+
+.price-btn{
+  display:inline-block;
+  margin-top:1rem;
+  padding:10px;
+  background:#1e90ff;
+  color:#fff;
+  text-decoration:none;
+  border-radius:8px;
+}
+
+/* XAT */
 .section{
   padding:40px;
   text-align:center;
@@ -79,32 +99,53 @@ body{
 <div class="player">
   <button onclick="toggleRadio()">▶️ Play</button>
   <div class="info">
-    <span id="status">Carregando...</span><br>
-    <span id="musica">---</span>
+    <div id="status">Carregando...</div>
+    <div id="musica">---</div>
   </div>
 </div>
 
 <div class="spacer"></div>
 
-<!-- PIX -->
-<div class="pix">
-  <h2>💰 Pagamento via PIX</h2>
-
-  <textarea readonly id="pixCode">
-00020101021226850014br.gov.bcb.pix2563qrcodepix.bb.com.br/pix/v2/bf62491c-2761-48e9-808e-f47e39ec6b485204000053039865406150.005802BR5925JULIO_CESAR_SUPRIANO_DE_S6015PALMEIRAS_DE_GO62070503***630445D6
-  </textarea>
-
-  <br>
-  <button onclick="copiarPix()">📋 Copiar PIX</button>
-
-  <div id="qrcode"></div>
+<!-- TOPO -->
+<div class="topo">
+  <h1>🎧 Web Rádio</h1>
+  <p>Monte sua rádio online agora</p>
 </div>
 
+<!-- PLANOS -->
+<section class="plans-grid">
+
+  <div class="plan-card">
+    <h2>Plano Iniciante</h2>
+    <p>250 ouvintes<br>3GB AutoDJ</p>
+    <a href="#" class="price-btn">R$ 50</a>
+  </div>
+
+  <div class="plan-card">
+    <h2>Plano Super</h2>
+    <p>500 ouvintes<br>App + Player + Xat</p>
+    <a href="#" class="price-btn">R$ 100</a>
+  </div>
+
+  <div class="plan-card">
+    <h2>Plano Ouro</h2>
+    <p>Site + Rádio + App Android</p>
+    <a href="#" class="price-btn">R$ 150</a>
+  </div>
+
+</section>
+
+<!-- XAT POWERS -->
 <div class="section">
-  <h2>🎧 Sua Rádio 24h Online</h2>
+  <h2>🔥 Últimos Powers</h2>
+  <div id="xatPowers">Carregando...</div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- XAT PROMOT -->
+<div class="section">
+  <h2>💬 Xats em Destaque (BR)</h2>
+  <div id="xatPromot">Carregando...</div>
+</div>
 
 <script>
 let audio = new Audio("https://stm.igng.com.br:7018/stream");
@@ -122,39 +163,49 @@ function toggleRadio(){
   }
 }
 
-/* GERAR QR CODE PIX */
-new QRCode(document.getElementById("qrcode"), {
-  text: document.getElementById("pixCode").value.trim(),
-  width: 200,
-  height: 200
-});
-
-/* COPIAR PIX */
-function copiarPix(){
-  let pix = document.getElementById("pixCode");
-  pix.select();
-  document.execCommand("copy");
-  alert("PIX copiado!");
-}
-
-/* API RADIO (NOME DA MUSICA + AO VIVO) */
-async function atualizar(){
+/* =========================
+   RADIO INTELIGENTE
+========================= */
+async function atualizarRadio(){
   try{
     let res = await fetch("https://stm.igng.com.br:7018/status-json.xsl");
     let data = await res.json();
+    let s = data.icestats.source;
 
-    let source = data.icestats.source;
+    let titulo = s.title || "";
+    let server = s.server_name || "";
 
-    if(source.title){
-      document.getElementById("musica").innerText = source.title;
+    let t = titulo.toLowerCase();
+    let sv = server.toLowerCase();
+
+    let isLive = false;
+
+    if(
+      sv.includes("live") ||
+      sv.includes("ao vivo") ||
+      sv.includes("dj") ||
+      t.includes("live") ||
+      t.includes("ao vivo") ||
+      t.includes("programa") ||
+      !titulo.includes(" - ")
+    ){
+      isLive = true;
     }
 
-    /* AO VIVO */
-    if(source.listeners > 0){
-      document.getElementById("status").innerHTML = "🔴 AO VIVO";
-      document.getElementById("status").classList.add("live");
+    if(titulo.includes(" - ")){
+      let [artista, musica] = titulo.split(" - ");
+      document.getElementById("musica").innerHTML =
+        `<b>${artista}</b> - ${musica}`;
     }else{
-      document.getElementById("status").innerHTML = "🟢 ONLINE";
+      document.getElementById("musica").innerText = titulo;
+    }
+
+    if(isLive){
+      document.getElementById("status").innerHTML = "🔴 AO VIVO";
+      document.getElementById("status").className = "live";
+    }else{
+      document.getElementById("status").innerHTML = "🎵 AutoDJ";
+      document.getElementById("status").className = "";
     }
 
   }catch(e){
@@ -162,8 +213,63 @@ async function atualizar(){
   }
 }
 
-setInterval(atualizar, 5000);
-atualizar();
+setInterval(atualizarRadio, 5000);
+atualizarRadio();
+
+/* =========================
+   XAT POWERS
+========================= */
+async function carregarPowers(){
+  try{
+    let res = await fetch("https://xat.com/json/powers.php");
+    let data = await res.json();
+
+    let box = document.getElementById("xatPowers");
+    box.innerHTML = "";
+
+    data.slice(0,5).forEach(p=>{
+      let div = document.createElement("div");
+      div.innerText = "🔥 " + p.name;
+      box.appendChild(div);
+    });
+
+  }catch{
+    document.getElementById("xatPowers").innerText="Erro";
+  }
+}
+
+setInterval(carregarPowers,20000);
+carregarPowers();
+
+/* =========================
+   XAT PROMOT BR
+========================= */
+async function carregarPromot(){
+  try{
+    let res = await fetch("https://xat.com/json/promoted.php");
+    let data = await res.json();
+
+    let box = document.getElementById("xatPromot");
+    box.innerHTML = "";
+
+    data.forEach(chat=>{
+      if(
+        chat.name.toLowerCase().includes("br") ||
+        chat.name.toLowerCase().includes("brasil")
+      ){
+        let div = document.createElement("div");
+        div.innerText = "💬 " + chat.name;
+        box.appendChild(div);
+      }
+    });
+
+  }catch{
+    document.getElementById("xatPromot").innerText="Erro";
+  }
+}
+
+setInterval(carregarPromot,20000);
+carregarPromot();
 </script>
 
 </body>
