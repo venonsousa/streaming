@@ -44,6 +44,7 @@ body::after{
   height:60px;
   border-radius:10px;
   object-fit:cover;
+  box-shadow:0 0 10px rgba(255,204,0,0.7);
 }
 
 .player .info{
@@ -97,10 +98,6 @@ body::after{
   transform:translateY(-8px);
 }
 
-.plan-card h2{
-  margin-top:0;
-}
-
 .btn{
   display:inline-block;
   margin-top:1rem;
@@ -143,7 +140,6 @@ body::after{
 
 <!-- PLANOS -->
 <section class="plans">
-
   <div class="plan-card">
     <h2>Plano Iniciante</h2>
     <p>🎧 250 ouvintes</p>
@@ -163,7 +159,6 @@ body::after{
     <p>🚀 Site + Rádio + App</p>
     <a href="#" class="btn">R$ 150</a>
   </div>
-
 </section>
 
 <script>
@@ -201,7 +196,7 @@ async function atualizarMusica(){
       musica = nome;
     }
 
-    buscarCapa(artista + " " + musica);
+    buscarCapa(`${artista} ${musica} oficial`);
 
   }catch{
     musicaEl.innerText = "Erro ao carregar música";
@@ -210,16 +205,32 @@ async function atualizarMusica(){
 
 let musicaEl = document.getElementById("musica");
 
-/* CAPA */
+/* CAPA APPLE MUSIC (MELHORADA) */
 async function buscarCapa(busca){
   try{
-    let r = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busca)}&limit=1`);
+    let url = `https://itunes.apple.com/search?term=${encodeURIComponent(busca)}&entity=song&limit=1`;
+    let r = await fetch(url);
     let d = await r.json();
 
-    if(d.results.length > 0){
-      document.getElementById("capa").src = d.results[0].artworkUrl100;
+    if(d.results && d.results.length > 0){
+      let img = d.results[0].artworkUrl100;
+
+      // qualidade maior
+      img = img.replace("100x100","600x600");
+
+      document.getElementById("capa").src = img;
+    }else{
+      capaPadrao();
     }
-  }catch{}
+
+  }catch{
+    capaPadrao();
+  }
+}
+
+function capaPadrao(){
+  document.getElementById("capa").src =
+    "https://via.placeholder.com/600x600?text=Sem+Capa";
 }
 
 /* STATUS */
