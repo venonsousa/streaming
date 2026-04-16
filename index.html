@@ -74,6 +74,48 @@ body::after{
   background:rgba(139,69,19,0.7);
   backdrop-filter: blur(5px);
 }
+
+/* PLANOS */
+.plans{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:2rem;
+  padding:2rem;
+}
+
+.plan-card{
+  background:rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.2);
+  padding:2rem;
+  border-radius:15px;
+  text-align:center;
+  backdrop-filter: blur(10px);
+  transition:0.3s;
+}
+
+.plan-card:hover{
+  transform:translateY(-8px);
+}
+
+.plan-card h2{
+  margin-top:0;
+}
+
+.btn{
+  display:inline-block;
+  margin-top:1rem;
+  padding:10px 20px;
+  background:#ffcc00;
+  color:#000;
+  border-radius:10px;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.destaque{
+  border:2px solid #ffcc00;
+  transform:scale(1.05);
+}
 </style>
 </head>
 
@@ -99,6 +141,31 @@ body::after{
   <p>O melhor do sertanejo 24h sem parar</p>
 </div>
 
+<!-- PLANOS -->
+<section class="plans">
+
+  <div class="plan-card">
+    <h2>Plano Iniciante</h2>
+    <p>🎧 250 ouvintes</p>
+    <p>💾 3GB AutoDJ</p>
+    <a href="#" class="btn">R$ 50</a>
+  </div>
+
+  <div class="plan-card destaque">
+    <h2>🔥 Plano Super</h2>
+    <p>🎧 500 ouvintes</p>
+    <p>📱 App + Player + Xat</p>
+    <a href="#" class="btn">R$ 100</a>
+  </div>
+
+  <div class="plan-card">
+    <h2>Plano Ouro</h2>
+    <p>🚀 Site + Rádio + App</p>
+    <a href="#" class="btn">R$ 150</a>
+  </div>
+
+</section>
+
 <script>
 let audio = new Audio("https://stm.igng.com.br:7018/stream");
 audio.play();
@@ -116,7 +183,7 @@ function toggleRadio(){
   }
 }
 
-/* MUSICA API */
+/* MUSICA */
 async function atualizarMusica(){
   try{
     let r = await fetch("http://igng.com.br/api-json/TnpBeE9BPT0rWg==");
