@@ -36,7 +36,7 @@ body::after{
 }
 
 /* CAMADAS */
-.player, .topo, .plans, nav{
+.player, .topo, .plans, .streaming-box, nav{
   position:relative;
   z-index:3;
 }
@@ -80,7 +80,7 @@ nav a:hover{color:#ffcc00;}
   padding:4rem 1rem;
 }
 
-/* PLANOS PROFISSIONAIS */
+/* PLANOS */
 .plans{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -93,30 +93,12 @@ nav a:hover{color:#ffcc00;}
   padding:2rem;
   border-radius:20px;
   text-align:center;
-  backdrop-filter: blur(12px);
-  border:1px solid rgba(255,255,255,0.1);
-  position:relative;
-  transition:0.3s;
-}
-
-.plan-card:hover{
-  transform:translateY(-10px) scale(1.02);
-  box-shadow:0 0 25px rgba(255,204,0,0.3);
 }
 
 .preco{
-  font-size:2.2rem;
-  font-weight:bold;
+  font-size:2rem;
   color:#ffcc00;
-  margin:10px 0;
 }
-
-.plan-card ul{
-  list-style:none;
-  padding:0;
-}
-
-.plan-card li{margin:8px 0;}
 
 .btn{
   display:inline-block;
@@ -125,24 +107,39 @@ nav a:hover{color:#ffcc00;}
   background:#ffcc00;
   color:#000;
   border-radius:10px;
-  font-weight:bold;
-  text-decoration:none;
 }
 
-.destaque{
-  border:2px solid #ffcc00;
-  transform:scale(1.05);
+/* STREAM */
+.streaming-box{
+  position:relative;
+  padding:4rem 1rem;
+  text-align:center;
 }
 
-.tag{
+.stream-img{
   position:absolute;
-  top:-10px;
-  right:-10px;
-  background:#ffcc00;
-  color:#000;
-  padding:5px 10px;
-  font-size:12px;
-  border-radius:10px;
+  left:20px;
+  top:50%;
+  transform:translateY(-50%);
+  width:120px;
+  filter: drop-shadow(0 0 10px rgba(0,150,255,0.7));
+}
+
+.stream-card{
+  background:rgba(0,0,0,0.6);
+  padding:2rem;
+  border-radius:15px;
+  display:inline-block;
+}
+
+/* RESPONSIVO */
+@media(max-width:768px){
+  .stream-img{
+    position:static;
+    transform:none;
+    display:block;
+    margin:0 auto 20px;
+  }
 }
 </style>
 </head>
@@ -155,6 +152,7 @@ nav a:hover{color:#ffcc00;}
 <nav>
   <a href="#">Início</a>
   <a href="#planos">Planos</a>
+  <a href="#stream">Streaming</a>
 </nav>
 
 <!-- PLAYER -->
@@ -176,35 +174,30 @@ nav a:hover{color:#ffcc00;}
   <div class="plan-card">
     <h2>Plano Iniciante</h2>
     <div class="preco">R$ 50</div>
-    <ul>
-      <li>🎧 250 ouvintes</li>
-      <li>💾 3GB AutoDJ</li>
-      <li>📡 Streaming estável</li>
-    </ul>
     <a href="#" class="btn">Contratar</a>
   </div>
 
-  <div class="plan-card destaque">
-    <div class="tag">MAIS VENDIDO</div>
+  <div class="plan-card">
     <h2>Plano Super</h2>
     <div class="preco">R$ 100</div>
-    <ul>
-      <li>🎧 500 ouvintes</li>
-      <li>📱 App + Player</li>
-      <li>💬 Integração Xat</li>
-    </ul>
     <a href="#" class="btn">Contratar</a>
   </div>
 
   <div class="plan-card">
     <h2>Plano Ouro</h2>
     <div class="preco">R$ 150</div>
-    <ul>
-      <li>🚀 Site completo</li>
-      <li>📻 Rádio + App</li>
-      <li>🎧 Player Premium</li>
-    </ul>
     <a href="#" class="btn">Contratar</a>
+  </div>
+
+</section>
+
+<!-- STREAM -->
+<section id="stream" class="streaming-box">
+
+  <img src="https://xatimg.com/image/vo5Iara9Kemo.png" class="stream-img">
+
+  <div class="stream-card">
+    🎧 Sua rádio 24h no ar
   </div>
 
 </section>
@@ -264,9 +257,8 @@ function animate(){
 
     let dx=p.x-mouse.x;
     let dy=p.y-mouse.y;
-    let dist=Math.sqrt(dx*dx+dy*dy);
 
-    if(dist<150){
+    if(Math.sqrt(dx*dx+dy*dy)<150){
       p.x+=dx*0.03;
       p.y+=dy*0.03;
     }
