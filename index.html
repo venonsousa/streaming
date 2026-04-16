@@ -3,58 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Rádio Sertaneja Premium</title>
-<meta name="description" content="Rádio Sertaneja Premium - Streaming 24h">
-
-<link rel="icon" href="/favicon.svg">
+<title>Rádio Premium</title>
 
 <style>
 body{
   margin:0;
   font-family:Arial;
-  background:#0f0f0f;
+  background:#121212;
   color:#fff;
-}
-
-/* HEADER */
-header{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(10px);
-  padding:10px 20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-header a{
-  color:#fff;
-  margin:0 10px;
-  text-decoration:none;
-}
-
-/* HERO */
-.hero{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-}
-
-/* PLAYER */
-.player{
-  background:#1c1c1c;
-  padding:20px;
-  border-radius:12px;
 }
 
 /* PLANOS */
 .planos{
-  padding:80px 20px;
+  padding:60px 20px;
   text-align:center;
 }
 
@@ -67,82 +28,147 @@ header a{
 
 .card{
   background:#1c1c1c;
-  padding:20px;
-  border-radius:12px;
-  width:250px;
+  padding:25px;
+  border-radius:15px;
+  width:260px;
 }
 
+.pro{
+  background:#1db954;
+  color:#000;
+  transform:scale(1.05);
+}
+
+/* BOTÃO */
 button{
   width:100%;
-  padding:10px;
+  padding:12px;
   border:none;
-  border-radius:8px;
-  background:#00c853;
-  color:#fff;
+  border-radius:10px;
   cursor:pointer;
+  margin-top:10px;
 }
 
-/* FOOTER */
-footer{
-  padding:20px;
+/* LOGIN */
+.login{
+  padding:40px;
   text-align:center;
-  background:#111;
+}
+
+/* WHATS FLOAT */
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  color:#fff;
+  padding:15px;
+  border-radius:50%;
+  font-size:20px;
+  text-decoration:none;
 }
 </style>
-
 </head>
 
 <body>
 
-<header>
-  <div>🎵 Rádio Sertaneja</div>
-  <div>
-    <a href="#">Início</a>
-    <a href="#planos">Planos</a>
-  </div>
-</header>
+<!-- PLANOS -->
+<section class="planos">
 
-<section class="hero">
-  <div class="player">
-    <h2>Ao vivo agora</h2>
-    <audio controls autoplay>
-      <source src="https://stm.igng.com.br:7018/stream" type="audio/mpeg">
-    </audio>
-  </div>
+<h2>Escolha seu Plano</h2>
+
+<div class="cards">
+
+<!-- BASICO -->
+<div class="card">
+  <h3>Básico</h3>
+  <h1>R$ 49,90</h1>
+  <p>Até 100 ouvintes</p>
+
+  <a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
+    <button style="background:#1db954;color:#fff">
+      Contratar com PIX
+    </button>
+  </a>
+
+  <a href="https://wa.me/5599999999999?text=Contratei%20o%20plano%20Básico" target="_blank">
+    <button style="background:#25D366;color:#fff">
+      Já paguei
+    </button>
+  </a>
+</div>
+
+<!-- PRO -->
+<div class="card pro">
+  <h3>🔥 PRO</h3>
+  <h1>R$ 99,90</h1>
+  <p>Até 500 ouvintes</p>
+
+  <a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
+    <button style="background:#000;color:#fff">
+      Assinar Agora
+    </button>
+  </a>
+
+  <a href="https://wa.me/5599999999999?text=Contratei%20o%20plano%20PRO" target="_blank">
+    <button style="background:#fff;color:#000">
+      Já paguei
+    </button>
+  </a>
+</div>
+
+<!-- PREMIUM -->
+<div class="card">
+  <h3>Premium</h3>
+  <h1>R$ 149,90</h1>
+  <p>Ilimitado</p>
+
+  <a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
+    <button style="background:#1db954;color:#fff">
+      Contratar com PIX
+    </button>
+  </a>
+
+  <a href="https://wa.me/5599999999999?text=Contratei%20o%20plano%20Premium" target="_blank">
+    <button style="background:#25D366;color:#fff">
+      Já paguei
+    </button>
+  </a>
+</div>
+
+</div>
 </section>
 
-<section id="planos" class="planos">
-  <h2>Planos</h2>
+<!-- ÁREA DO CLIENTE -->
+<section class="login">
 
-  <div class="cards">
+<h2>Área do Cliente</h2>
 
-    <div class="card">
-      <h3>Iniciante</h3>
-      <h2>R$ 50</h2>
-      <p>Qualidade padrão</p>
-      <button>Contratar</button>
-    </div>
+<input id="user" placeholder="Usuário" style="padding:10px;width:200px"><br><br>
+<input id="pass" type="password" placeholder="Senha" style="padding:10px;width:200px"><br><br>
 
-    <div class="card">
-      <h3>Super</h3>
-      <h2>R$ 100</h2>
-      <p>Qualidade HD</p>
-      <button>Contratar</button>
-    </div>
+<button onclick="login()">Entrar</button>
 
-    <div class="card">
-      <h3>Ouro</h3>
-      <h2>R$ 150</h2>
-      <p>Sem anúncios</p>
-      <button>Contratar</button>
-    </div>
-
-  </div>
 </section>
 
-<footer>
-  © 2026 Rádio Sertaneja Premium
-</footer>
+<!-- WHATSAPP FLUTUANTE -->
+<a href="https://wa.me/5599999999999?text=Preciso%20de%20suporte" 
+   class="whatsapp" target="_blank">
+   💬
+</a>
+
+<script>
+function login(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  if(u === "admin" && p === "123"){
+    alert("Login OK");
+  }else{
+    alert("Dados inválidos");
+  }
+}
+</script>
 
 </body>
 </html>
