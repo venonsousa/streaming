@@ -14,18 +14,18 @@ body{
   background-size: cover;
 }
 
-/* CANVAS FUNDO */
+/* CANVAS MAIS VISÍVEL */
 #bgCanvas{
   position:fixed;
   top:0;
   left:0;
   width:100%;
   height:100%;
-  z-index:0;
+  z-index:1;
   pointer-events:none;
 }
 
-/* overlay */
+/* overlay mais leve */
 body::after{
   content:"";
   position:fixed;
@@ -33,20 +33,44 @@ body::after{
   left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.65);
-  z-index:1;
+  background:rgba(0,0,0,0.4);
+  z-index:2;
 }
 
-/* GARANTE CONTEÚDO ACIMA */
-.player, .topo, .plans, .streaming-box{
+/* CONTEÚDO ACIMA */
+.player, .topo, .plans, .streaming-box, nav{
   position:relative;
-  z-index:2;
+  z-index:3;
+}
+
+/* MENU */
+nav{
+  position:fixed;
+  top:0;
+  width:100%;
+  display:flex;
+  justify-content:center;
+  gap:2rem;
+  padding:10px;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(10px);
+}
+
+nav a{
+  color:#fff;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+nav a:hover{
+  color:#ffcc00;
 }
 
 /* PLAYER */
 .player{
   position:fixed;
-  top:0;
+  top:50px;
   width:100%;
   background:linear-gradient(90deg,#8B4513,#d2691e);
   display:flex;
@@ -59,30 +83,13 @@ body::after{
   width:60px;
   height:60px;
   border-radius:10px;
-  object-fit:cover;
-  box-shadow:0 0 10px rgba(255,204,0,0.7);
 }
 
-.player .info{flex:1;padding:0 10px;}
+.spacer{height:120px;}
 
-.player button{
-  background:#ffcc00;
-  border:none;
-  padding:8px 12px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.live{color:#ff3b3b;font-weight:bold;}
-.spacer{height:80px;}
-
-/* TOPO */
 .topo{
   text-align:center;
   padding:4rem 1rem;
-  background:rgba(139,69,19,0.7);
-  backdrop-filter: blur(5px);
 }
 
 /* PLANOS */
@@ -98,40 +105,27 @@ body::after{
   padding:2rem;
   border-radius:15px;
   text-align:center;
-  backdrop-filter: blur(10px);
-  transition:0.3s;
 }
-
-.plan-card:hover{transform:translateY(-8px);}
 
 .btn{
   display:inline-block;
   margin-top:1rem;
-  padding:10px 20px;
+  padding:10px;
   background:#ffcc00;
   color:#000;
   border-radius:10px;
-  font-weight:bold;
-  text-decoration:none;
 }
 
-.destaque{
-  border:2px solid #ffcc00;
-  transform:scale(1.05);
-}
-
-/* STREAM BOX */
+/* STREAM BOX LIMPO */
 .streaming-box{
   padding:3rem;
   text-align:center;
-  background: radial-gradient(circle at top,#0a1f3d,#000);
 }
 
 .stream-card{
   background:rgba(0,0,0,0.6);
   padding:2rem;
   border-radius:15px;
-  display:inline-block;
 }
 </style>
 </head>
@@ -140,14 +134,21 @@ body::after{
 
 <canvas id="bgCanvas"></canvas>
 
+<!-- MENU -->
+<nav>
+  <a href="#">Início</a>
+  <a href="#planos">Planos</a>
+  <a href="#stream">Streaming</a>
+</nav>
+
 <!-- PLAYER -->
 <div class="player">
-  <img id="capa" src="https://via.placeholder.com/60">
-  <div class="info">
+  <img id="capa" src="">
+  <div>
     <div id="status">Carregando...</div>
-    <div id="musica">🎵 Carregando...</div>
+    <div id="musica">🎵 ...</div>
   </div>
-  <button onclick="toggleRadio()">🔇 Desligar</button>
+  <button onclick="toggleRadio()">🔇</button>
 </div>
 
 <div class="spacer"></div>
@@ -155,37 +156,30 @@ body::after{
 <!-- TOPO -->
 <div class="topo">
   <h1>🤠 Rádio Sertaneja Premium</h1>
-  <p>O melhor do sertanejo 24h</p>
 </div>
 
 <!-- PLANOS -->
-<section class="plans">
+<section id="planos" class="plans">
   <div class="plan-card">
     <h2>Plano Iniciante</h2>
-    <p>🎧 250 ouvintes</p>
-    <p>💾 3GB AutoDJ</p>
-    <a href="#" class="btn">R$ 50</a>
+    <p>R$ 50</p>
   </div>
 
-  <div class="plan-card destaque">
-    <h2>🔥 Plano Super</h2>
-    <p>🎧 500 ouvintes</p>
-    <p>📱 App + Player + Xat</p>
-    <a href="#" class="btn">R$ 100</a>
+  <div class="plan-card">
+    <h2>Plano Super</h2>
+    <p>R$ 100</p>
   </div>
 
   <div class="plan-card">
     <h2>Plano Ouro</h2>
-    <p>🚀 Site + Rádio + App</p>
-    <a href="#" class="btn">R$ 150</a>
+    <p>R$ 150</p>
   </div>
 </section>
 
 <!-- STREAM -->
-<section class="streaming-box">
+<section id="stream" class="streaming-box">
   <div class="stream-card">
-    <p><strong>Servidor:</strong> stm.igng.com.br</p>
-    <p><strong>Status:</strong> <span id="streamStatus">Carregando...</span></p>
+    🎧 Streaming ativo 24h
   </div>
 </section>
 
@@ -195,53 +189,20 @@ audio.play();
 let tocando=true;
 
 function toggleRadio(){
-  if(tocando){audio.pause();tocando=false;event.target.innerText="▶️ Ligar";}
-  else{audio.play();tocando=true;event.target.innerText="🔇 Desligar";}
+  tocando?audio.pause():audio.play();
+  tocando=!tocando;
 }
 
 /* MUSICA */
 async function atualizarMusica(){
   let r=await fetch("http://igng.com.br/api-json/TnpBeE9BPT0rWg==");
   let d=await r.json();
-  let nome=d.musica||"Desconhecido";
-
-  musica.innerText=nome;
-  buscarCapa(nome);
+  musica.innerText=d.musica||"...";
 }
-
-/* CAPA */
-async function buscarCapa(busca){
-  let r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busca)}&limit=1`);
-  let d=await r.json();
-  if(d.results.length){
-    capa.src=d.results[0].artworkUrl100.replace("100x100","600x600");
-  }
-}
-
-/* STATUS */
-async function atualizarStatus(){
-  let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
-  let d=await r.json();
-  let live=!d.icestats.source.title.includes(" - ");
-  status.innerText=live?"🔴 AO VIVO":"🎵 Tocando";
-}
-
-/* STREAM */
-async function atualizarStream(){
-  let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
-  let d=await r.json();
-  streamStatus.innerText=d.icestats.source.listeners>0?"🟢 Online":"🟡 Aguardando";
-}
-
 setInterval(atualizarMusica,5000);
-setInterval(atualizarStatus,5000);
-setInterval(atualizarStream,5000);
-
 atualizarMusica();
-atualizarStatus();
-atualizarStream();
 
-/* CANVAS */
+/* CANVAS FULL */
 const canvas=document.getElementById("bgCanvas");
 const ctx=canvas.getContext("2d");
 let particles=[];
@@ -259,7 +220,7 @@ window.onmousemove=e=>{
   mouse.y=e.y;
 };
 
-for(let i=0;i<80;i++){
+for(let i=0;i<100;i++){
   particles.push({
     x:Math.random()*canvas.width,
     y:Math.random()*canvas.height,
@@ -280,23 +241,19 @@ function animate(){
     let dy=p.y-mouse.y;
     let dist=Math.sqrt(dx*dx+dy*dy);
 
-    if(dist<120){
-      p.x+=dx*0.02;
-      p.y+=dy*0.02;
+    if(dist<150){
+      p.x+=dx*0.03;
+      p.y+=dy*0.03;
     }
 
     ctx.beginPath();
     ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fillStyle="rgba(0,150,255,0.7)";
+    ctx.fillStyle="rgba(0,150,255,0.9)";
     ctx.fill();
-
-    if(p.x<0||p.x>canvas.width)p.vx*=-1;
-    if(p.y<0||p.y>canvas.height)p.vy*=-1;
   });
 
   requestAnimationFrame(animate);
 }
-
 animate();
 </script>
 
