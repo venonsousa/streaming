@@ -13,17 +13,16 @@ body{
   color:#fff;
 }
 
-/* PLAYER TOPO */
+/* PLAYER */
 .player{
   position:fixed;
   top:0;
-  left:0;
   width:100%;
   background:#0d2b4f;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:10px 20px;
+  padding:10px;
   z-index:999;
 }
 
@@ -36,23 +35,13 @@ body{
   cursor:pointer;
 }
 
-.info{
-  font-size:14px;
-}
-
-.live{
-  color:red;
-  font-weight:bold;
-}
-
-.spacer{
-  height:70px;
-}
+.live{color:red;font-weight:bold;}
+.spacer{height:70px;}
 
 /* PLANOS */
 .topo{
   text-align:center;
-  padding:3rem 1rem;
+  padding:3rem;
   background:linear-gradient(135deg,#0d2b4f,#1e3f6f);
 }
 
@@ -68,27 +57,35 @@ body{
   padding:2rem;
   border-radius:10px;
   text-align:center;
-  transition:0.3s;
-}
-
-.plan-card:hover{
-  transform:translateY(-5px);
 }
 
 .price-btn{
-  display:inline-block;
-  margin-top:1rem;
-  padding:10px;
   background:#1e90ff;
+  padding:10px;
+  display:inline-block;
+  margin-top:10px;
+  border-radius:8px;
   color:#fff;
   text-decoration:none;
-  border-radius:8px;
 }
 
 /* XAT */
 .section{
   padding:40px;
   text-align:center;
+}
+
+.power-card{
+  display:inline-block;
+  margin:10px;
+  padding:15px;
+  background:rgba(255,255,255,0.1);
+  border-radius:10px;
+  width:120px;
+}
+
+.power-card img{
+  width:60px;
 }
 </style>
 </head>
@@ -98,7 +95,7 @@ body{
 <!-- PLAYER -->
 <div class="player">
   <button onclick="toggleRadio()">▶️ Play</button>
-  <div class="info">
+  <div>
     <div id="status">Carregando...</div>
     <div id="musica">---</div>
   </div>
@@ -109,12 +106,11 @@ body{
 <!-- TOPO -->
 <div class="topo">
   <h1>🎧 Web Rádio</h1>
-  <p>Monte sua rádio online agora</p>
+  <p>Sua rádio online profissional</p>
 </div>
 
 <!-- PLANOS -->
 <section class="plans-grid">
-
   <div class="plan-card">
     <h2>Plano Iniciante</h2>
     <p>250 ouvintes<br>3GB AutoDJ</p>
@@ -129,19 +125,18 @@ body{
 
   <div class="plan-card">
     <h2>Plano Ouro</h2>
-    <p>Site + Rádio + App Android</p>
+    <p>Site + Rádio + App</p>
     <a href="#" class="price-btn">R$ 150</a>
   </div>
-
 </section>
 
-<!-- XAT POWERS -->
+<!-- POWERS -->
 <div class="section">
   <h2>🔥 Últimos Powers</h2>
   <div id="xatPowers">Carregando...</div>
 </div>
 
-<!-- XAT PROMOT -->
+<!-- PROMOT -->
 <div class="section">
   <h2>💬 Xats em Destaque (BR)</h2>
   <div id="xatPromot">Carregando...</div>
@@ -149,116 +144,101 @@ body{
 
 <script>
 let audio = new Audio("https://stm.igng.com.br:7018/stream");
-let tocando = false;
+let tocando=false;
 
 function toggleRadio(){
   if(!tocando){
     audio.play();
-    tocando = true;
-    event.target.innerText = "⏸️ Pause";
+    tocando=true;
+    event.target.innerText="⏸️ Pause";
   }else{
     audio.pause();
-    tocando = false;
-    event.target.innerText = "▶️ Play";
+    tocando=false;
+    event.target.innerText="▶️ Play";
   }
 }
 
-/* =========================
-   RADIO INTELIGENTE
-========================= */
+/* RADIO */
 async function atualizarRadio(){
   try{
-    let res = await fetch("https://stm.igng.com.br:7018/status-json.xsl");
-    let data = await res.json();
-    let s = data.icestats.source;
+    let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
+    let d=await r.json();
+    let s=d.icestats.source;
 
-    let titulo = s.title || "";
-    let server = s.server_name || "";
+    let t=s.title||"";
+    let server=s.server_name||"";
 
-    let t = titulo.toLowerCase();
-    let sv = server.toLowerCase();
+    let isLive = (
+      server.toLowerCase().includes("live") ||
+      t.toLowerCase().includes("ao vivo") ||
+      !t.includes(" - ")
+    );
 
-    let isLive = false;
-
-    if(
-      sv.includes("live") ||
-      sv.includes("ao vivo") ||
-      sv.includes("dj") ||
-      t.includes("live") ||
-      t.includes("ao vivo") ||
-      t.includes("programa") ||
-      !titulo.includes(" - ")
-    ){
-      isLive = true;
-    }
-
-    if(titulo.includes(" - ")){
-      let [artista, musica] = titulo.split(" - ");
-      document.getElementById("musica").innerHTML =
-        `<b>${artista}</b> - ${musica}`;
+    if(t.includes(" - ")){
+      let [a,m]=t.split(" - ");
+      document.getElementById("musica").innerHTML=`<b>${a}</b> - ${m}`;
     }else{
-      document.getElementById("musica").innerText = titulo;
+      document.getElementById("musica").innerText=t;
     }
 
     if(isLive){
-      document.getElementById("status").innerHTML = "🔴 AO VIVO";
-      document.getElementById("status").className = "live";
+      document.getElementById("status").innerHTML="🔴 AO VIVO";
+      document.getElementById("status").className="live";
     }else{
-      document.getElementById("status").innerHTML = "🎵 AutoDJ";
-      document.getElementById("status").className = "";
+      document.getElementById("status").innerHTML="🎵 AutoDJ";
+      document.getElementById("status").className="";
     }
 
-  }catch(e){
-    document.getElementById("status").innerText = "Offline";
+  }catch{
+    document.getElementById("status").innerText="Offline";
   }
 }
 
-setInterval(atualizarRadio, 5000);
+setInterval(atualizarRadio,5000);
 atualizarRadio();
 
-/* =========================
-   XAT POWERS
-========================= */
+/* XAT LATEST (NOVO) */
 async function carregarPowers(){
   try{
-    let res = await fetch("https://xat.com/json/powers.php");
-    let data = await res.json();
+    let res=await fetch("https://api.xatblog.net/latest");
+    let data=await res.json();
 
-    let box = document.getElementById("xatPowers");
-    box.innerHTML = "";
+    let box=document.getElementById("xatPowers");
+    box.innerHTML="";
 
-    data.slice(0,5).forEach(p=>{
-      let div = document.createElement("div");
-      div.innerText = "🔥 " + p.name;
+    data.slice(0,6).forEach(p=>{
+      let div=document.createElement("div");
+      div.className="power-card";
+
+      div.innerHTML=`
+        <div>🔥 ${p.name}</div>
+        ${p.image?`<img src="${p.image}">`:""}
+      `;
+
       box.appendChild(div);
     });
 
   }catch{
-    document.getElementById("xatPowers").innerText="Erro";
+    document.getElementById("xatPowers").innerText="Erro ao carregar";
   }
 }
 
 setInterval(carregarPowers,20000);
 carregarPowers();
 
-/* =========================
-   XAT PROMOT BR
-========================= */
+/* XAT PROMOT */
 async function carregarPromot(){
   try{
-    let res = await fetch("https://xat.com/json/promoted.php");
-    let data = await res.json();
+    let r=await fetch("https://xat.com/json/promoted.php");
+    let d=await r.json();
 
-    let box = document.getElementById("xatPromot");
-    box.innerHTML = "";
+    let box=document.getElementById("xatPromot");
+    box.innerHTML="";
 
-    data.forEach(chat=>{
-      if(
-        chat.name.toLowerCase().includes("br") ||
-        chat.name.toLowerCase().includes("brasil")
-      ){
-        let div = document.createElement("div");
-        div.innerText = "💬 " + chat.name;
+    d.forEach(c=>{
+      if(c.name.toLowerCase().includes("br")){
+        let div=document.createElement("div");
+        div.innerText="💬 "+c.name;
         box.appendChild(div);
       }
     });
