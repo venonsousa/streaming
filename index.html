@@ -38,13 +38,14 @@ body{
 .live{color:red;font-weight:bold;}
 .spacer{height:70px;}
 
-/* PLANOS */
+/* TOPO */
 .topo{
   text-align:center;
   padding:3rem;
   background:linear-gradient(135deg,#0d2b4f,#1e3f6f);
 }
 
+/* PLANOS */
 .plans-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
@@ -69,12 +70,13 @@ body{
   text-decoration:none;
 }
 
-/* XAT */
+/* SECTIONS */
 .section{
   padding:40px;
   text-align:center;
 }
 
+/* POWERS */
 .power-card{
   display:inline-block;
   margin:10px;
@@ -84,8 +86,39 @@ body{
   width:120px;
 }
 
-.power-card img{
-  width:60px;
+/* ANIMAÇÃO NOVO */
+.power-new{
+  animation: aparecer 0.6s ease;
+  border:2px solid #1e90ff;
+}
+
+@keyframes aparecer{
+  0%{transform:scale(0.5);opacity:0;}
+  100%{transform:scale(1);opacity:1;}
+}
+
+.badge{
+  background:red;
+  padding:2px 6px;
+  font-size:10px;
+  border-radius:5px;
+  margin-left:5px;
+}
+
+/* HISTÓRICO */
+#historicoPowers{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+/* COUNTDOWN */
+#countdownBox{
+  background: rgba(255,255,255,0.1);
+  padding:20px;
+  border-radius:10px;
+  display:inline-block;
+  font-size:22px;
 }
 </style>
 </head>
@@ -130,10 +163,22 @@ body{
   </div>
 </section>
 
+<!-- COUNTDOWN -->
+<div class="section">
+  <h2>⏳ Próximo Power</h2>
+  <div id="countdownBox">Carregando...</div>
+</div>
+
 <!-- POWERS -->
 <div class="section">
   <h2>🔥 Últimos Powers</h2>
   <div id="xatPowers">Carregando...</div>
+</div>
+
+<!-- HISTÓRICO -->
+<div class="section">
+  <h2>🧨 Últimos Lançamentos</h2>
+  <div id="historicoPowers"></div>
 </div>
 
 <!-- PROMOT -->
@@ -176,75 +221,119 @@ async function atualizarRadio(){
 
     if(t.includes(" - ")){
       let [a,m]=t.split(" - ");
-      document.getElementById("musica").innerHTML=`<b>${a}</b> - ${m}`;
+      musica.innerHTML=`<b>${a}</b> - ${m}`;
     }else{
-      document.getElementById("musica").innerText=t;
+      musica.innerText=t;
     }
 
-    if(isLive){
-      document.getElementById("status").innerHTML="🔴 AO VIVO";
-      document.getElementById("status").className="live";
-    }else{
-      document.getElementById("status").innerHTML="🎵 AutoDJ";
-      document.getElementById("status").className="";
-    }
+    status.innerHTML = isLive ? "🔴 AO VIVO" : "🎵 AutoDJ";
+    status.className = isLive ? "live" : "";
 
   }catch{
-    document.getElementById("status").innerText="Offline";
+    status.innerText="Offline";
   }
 }
-
 setInterval(atualizarRadio,5000);
 atualizarRadio();
 
-/* XAT LATEST (NOVO) */
+/* COUNTDOWN */
+let tempoRestante=0;
+
+async function carregarCountdown(){
+  try{
+    let r=await fetch("https://api.xatblog.net/countdown");
+    let d=await r.json();
+    tempoRestante=d.countdown||d.time||0;
+  }catch{}
+}
+
+function atualizarContador(){
+  if(tempoRestante<=0){
+    countdownBox.innerText="🔥 Novo power a qualquer momento!";
+    return;
+  }
+  let h=Math.floor(tempoRestante/3600);
+  let m=Math.floor((tempoRestante%3600)/60);
+  let s=tempoRestante%60;
+  countdownBox.innerText=`${h}h ${m}m ${s}s`;
+  tempoRestante--;
+}
+
+setInterval(carregarCountdown,30000);
+setInterval(atualizarContador,1000);
+carregarCountdown();
+
+/* LATEST */
+let historico=[];
+
 async function carregarPowers(){
   try{
-    let res=await fetch("https://api.xatblog.net/latest");
-    let data=await res.json();
+    let r=await fetch("https://api.xatblog.net/latest");
+    let d=await r.json();
 
-    let box=document.getElementById("xatPowers");
+    let box=xatPowers;
     box.innerHTML="";
 
-    data.slice(0,6).forEach(p=>{
+    d.slice(0,6).forEach(p=>{
       let div=document.createElement("div");
       div.className="power-card";
-
-      div.innerHTML=`
-        <div>🔥 ${p.name}</div>
-        ${p.image?`<img src="${p.image}">`:""}
-      `;
-
+      div.innerHTML=`🔥 ${p.name}<br>${p.image?`<img src="${p.image}">`:""}`;
       box.appendChild(div);
     });
 
   }catch{
-    document.getElementById("xatPowers").innerText="Erro ao carregar";
+    xatPowers.innerText="Erro";
   }
 }
 
-setInterval(carregarPowers,20000);
-carregarPowers();
+async function atualizarHistorico(){
+  try{
+    let r=await fetch("https://api.xatblog.net/latest");
+    let d=await r.json();
 
-/* XAT PROMOT */
+    d.forEach(p=>{
+      if(historico.includes(p.name)) return;
+      historico.push(p.name);
+
+      let div=document.createElement("div");
+      div.className="power-card power-new";
+      div.innerHTML=`🔥 ${p.name} <span class="badge">NOVO</span><br>${p.image?`<img src="${p.image}">`:""}`;
+
+      historicoPowers.prepend(div);
+
+      setTimeout(()=>div.querySelector(".badge")?.remove(),5000);
+
+      if(historicoPowers.children.length>15){
+        historicoPowers.removeChild(historicoPowers.lastChild);
+      }
+    });
+
+  }catch{}
+}
+
+setInterval(carregarPowers,20000);
+setInterval(atualizarHistorico,20000);
+carregarPowers();
+atualizarHistorico();
+
+/* PROMOT */
 async function carregarPromot(){
   try{
     let r=await fetch("https://xat.com/json/promoted.php");
     let d=await r.json();
 
-    let box=document.getElementById("xatPromot");
-    box.innerHTML="";
+    xatPromot.innerHTML="";
 
     d.forEach(c=>{
       if(c.name.toLowerCase().includes("br")){
         let div=document.createElement("div");
         div.innerText="💬 "+c.name;
-        box.appendChild(div);
+        xatPromot.appendChild(div);
       }
     });
 
   }catch{
-    document.getElementById("xatPromot").innerText="Erro";
+    xatPromot.innerText="Erro";
   }
 }
 
