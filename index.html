@@ -14,6 +14,17 @@ body{
   background-size: cover;
 }
 
+/* CANVAS FUNDO */
+#bgCanvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
 /* overlay */
 body::after{
   content:"";
@@ -23,7 +34,13 @@ body::after{
   width:100%;
   height:100%;
   background:rgba(0,0,0,0.65);
-  z-index:-1;
+  z-index:1;
+}
+
+/* GARANTE CONTEÚDO ACIMA */
+.player, .topo, .plans, .streaming-box{
+  position:relative;
+  z-index:2;
 }
 
 /* PLAYER */
@@ -36,7 +53,6 @@ body::after{
   align-items:center;
   justify-content:space-between;
   padding:10px;
-  z-index:999;
 }
 
 .player img{
@@ -47,10 +63,7 @@ body::after{
   box-shadow:0 0 10px rgba(255,204,0,0.7);
 }
 
-.player .info{
-  flex:1;
-  padding:0 10px;
-}
+.player .info{flex:1;padding:0 10px;}
 
 .player button{
   background:#ffcc00;
@@ -61,11 +74,7 @@ body::after{
   font-weight:bold;
 }
 
-.live{
-  color:#ff3b3b;
-  font-weight:bold;
-}
-
+.live{color:#ff3b3b;font-weight:bold;}
 .spacer{height:80px;}
 
 /* TOPO */
@@ -86,7 +95,6 @@ body::after{
 
 .plan-card{
   background:rgba(0,0,0,0.6);
-  border:1px solid rgba(255,255,255,0.2);
   padding:2rem;
   border-radius:15px;
   text-align:center;
@@ -94,9 +102,7 @@ body::after{
   transition:0.3s;
 }
 
-.plan-card:hover{
-  transform:translateY(-8px);
-}
+.plan-card:hover{transform:translateY(-8px);}
 
 .btn{
   display:inline-block;
@@ -114,53 +120,33 @@ body::after{
   transform:scale(1.05);
 }
 
-/* STREAMING TEC */
+/* STREAM BOX */
 .streaming-box{
-  padding:3rem 1rem;
+  padding:3rem;
   text-align:center;
   background: radial-gradient(circle at top,#0a1f3d,#000);
-  position:relative;
-  overflow:hidden;
-}
-
-.streaming-box::before{
-  content:"";
-  position:absolute;
-  width:100%;
-  height:100%;
-  background-image: linear-gradient(rgba(0,150,255,0.15) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0,150,255,0.15) 1px, transparent 1px);
-  background-size:40px 40px;
 }
 
 .stream-card{
-  position:relative;
-  z-index:1;
   background:rgba(0,0,0,0.6);
   padding:2rem;
   border-radius:15px;
   display:inline-block;
-  border:1px solid rgba(0,150,255,0.5);
-  box-shadow:0 0 20px rgba(0,150,255,0.3);
-}
-
-#streamStatus{
-  font-weight:bold;
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="bgCanvas"></canvas>
+
 <!-- PLAYER -->
 <div class="player">
   <img id="capa" src="https://via.placeholder.com/60">
-
   <div class="info">
     <div id="status">Carregando...</div>
     <div id="musica">🎵 Carregando...</div>
   </div>
-
   <button onclick="toggleRadio()">🔇 Desligar</button>
 </div>
 
@@ -169,7 +155,7 @@ body::after{
 <!-- TOPO -->
 <div class="topo">
   <h1>🤠 Rádio Sertaneja Premium</h1>
-  <p>O melhor do sertanejo 24h sem parar</p>
+  <p>O melhor do sertanejo 24h</p>
 </div>
 
 <!-- PLANOS -->
@@ -195,122 +181,56 @@ body::after{
   </div>
 </section>
 
-<!-- STREAMING -->
+<!-- STREAM -->
 <section class="streaming-box">
-  <h2>🚀 Streaming Profissional</h2>
-
   <div class="stream-card">
     <p><strong>Servidor:</strong> stm.igng.com.br</p>
-    <p><strong>Porta:</strong> 7018</p>
-    <p><strong>Formato:</strong> MP3 / AAC+</p>
     <p><strong>Status:</strong> <span id="streamStatus">Carregando...</span></p>
   </div>
 </section>
 
 <script>
-let audio = new Audio("https://stm.igng.com.br:7018/stream");
+let audio=new Audio("https://stm.igng.com.br:7018/stream");
 audio.play();
 let tocando=true;
 
 function toggleRadio(){
-  if(tocando){
-    audio.pause();
-    tocando=false;
-    event.target.innerText="▶️ Ligar";
-  }else{
-    audio.play();
-    tocando=true;
-    event.target.innerText="🔇 Desligar";
-  }
+  if(tocando){audio.pause();tocando=false;event.target.innerText="▶️ Ligar";}
+  else{audio.play();tocando=true;event.target.innerText="🔇 Desligar";}
 }
 
 /* MUSICA */
 async function atualizarMusica(){
-  try{
-    let r=await fetch("http://igng.com.br/api-json/TnpBeE9BPT0rWg==");
-    let d=await r.json();
+  let r=await fetch("http://igng.com.br/api-json/TnpBeE9BPT0rWg==");
+  let d=await r.json();
+  let nome=d.musica||"Desconhecido";
 
-    let nome=d.musica||d.title||"Desconhecido";
-
-    let artista="",musica="";
-    if(nome.includes("-")){
-      [artista,musica]=nome.split("-");
-      musicaEl.innerHTML=`🎤 <b>${artista}</b> - ${musica}`;
-    }else{
-      musicaEl.innerText=nome;
-      musica=nome;
-    }
-
-    buscarCapa(`${artista} ${musica} oficial`);
-
-  }catch{
-    musicaEl.innerText="Erro música";
-  }
+  musica.innerText=nome;
+  buscarCapa(nome);
 }
-
-let musicaEl=document.getElementById("musica");
 
 /* CAPA */
 async function buscarCapa(busca){
-  try{
-    let r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busca)}&entity=song&limit=1`);
-    let d=await r.json();
-
-    if(d.results.length>0){
-      let img=d.results[0].artworkUrl100.replace("100x100","600x600");
-      document.getElementById("capa").src=img;
-    }else{
-      capaPadrao();
-    }
-  }catch{
-    capaPadrao();
+  let r=await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(busca)}&limit=1`);
+  let d=await r.json();
+  if(d.results.length){
+    capa.src=d.results[0].artworkUrl100.replace("100x100","600x600");
   }
 }
 
-function capaPadrao(){
-  document.getElementById("capa").src="https://via.placeholder.com/600x600?text=Sem+Capa";
-}
-
-/* STATUS AO VIVO */
+/* STATUS */
 async function atualizarStatus(){
-  try{
-    let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
-    let d=await r.json();
-    let s=d.icestats.source;
-
-    let isLive=(
-      s.server_name.toLowerCase().includes("live")||
-      s.title.toLowerCase().includes("ao vivo")||
-      !s.title.includes(" - ")
-    );
-
-    status.innerHTML=isLive?"🔴 AO VIVO AGORA":"🎵 Tocando agora";
-    status.className=isLive?"live":"";
-
-  }catch{
-    status.innerText="Offline";
-  }
+  let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
+  let d=await r.json();
+  let live=!d.icestats.source.title.includes(" - ");
+  status.innerText=live?"🔴 AO VIVO":"🎵 Tocando";
 }
 
-/* STATUS STREAM */
+/* STREAM */
 async function atualizarStream(){
-  try{
-    let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
-    let d=await r.json();
-
-    let online=d.icestats.source.listeners>0;
-
-    if(online){
-      streamStatus.innerHTML="🟢 Online";
-      streamStatus.style.color="#00ff00";
-    }else{
-      streamStatus.innerHTML="🟡 Aguardando";
-      streamStatus.style.color="#ffaa00";
-    }
-
-  }catch{
-    streamStatus.innerHTML="🔴 Offline";
-  }
+  let r=await fetch("https://stm.igng.com.br:7018/status-json.xsl");
+  let d=await r.json();
+  streamStatus.innerText=d.icestats.source.listeners>0?"🟢 Online":"🟡 Aguardando";
 }
 
 setInterval(atualizarMusica,5000);
@@ -320,6 +240,64 @@ setInterval(atualizarStream,5000);
 atualizarMusica();
 atualizarStatus();
 atualizarStream();
+
+/* CANVAS */
+const canvas=document.getElementById("bgCanvas");
+const ctx=canvas.getContext("2d");
+let particles=[];
+let mouse={x:0,y:0};
+
+function resize(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+}
+resize();
+window.onresize=resize;
+
+window.onmousemove=e=>{
+  mouse.x=e.x;
+  mouse.y=e.y;
+};
+
+for(let i=0;i<80;i++){
+  particles.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    vx:(Math.random()-0.5),
+    vy:(Math.random()-0.5),
+    size:Math.random()*2
+  });
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  particles.forEach(p=>{
+    p.x+=p.vx;
+    p.y+=p.vy;
+
+    let dx=p.x-mouse.x;
+    let dy=p.y-mouse.y;
+    let dist=Math.sqrt(dx*dx+dy*dy);
+
+    if(dist<120){
+      p.x+=dx*0.02;
+      p.y+=dy*0.02;
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    ctx.fillStyle="rgba(0,150,255,0.7)";
+    ctx.fill();
+
+    if(p.x<0||p.x>canvas.width)p.vx*=-1;
+    if(p.y<0||p.y>canvas.height)p.vy*=-1;
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
 </script>
 
 </body>
