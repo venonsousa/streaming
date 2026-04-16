@@ -3,247 +3,168 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Rádio - Planos</title>
+<title>Web Rádio Profissional</title>
+
 <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #fff;
-    background: url('https://images.unsplash.com/photo-1581090700227-8e5b593afc3b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
-    background-size: cover;
-    position: relative;
-  }
+body{
+  margin:0;
+  font-family:Arial;
+  background:#000;
+  color:#fff;
+}
 
-  body::after {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.6);
-    z-index: 0;
-  }
+/* PLAYER TOPO */
+.player{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:#0d2b4f;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:10px 20px;
+  z-index:999;
+}
 
-  header, .topo, .plans-grid, .features-grid, .contact, footer {
-    position: relative;
-    z-index: 1;
-  }
+.player button{
+  background:#1e90ff;
+  border:none;
+  color:#fff;
+  padding:8px 15px;
+  border-radius:5px;
+  cursor:pointer;
+}
 
-  /* Topo azul escuro até metade do site */
-  .topo {
-    background-color: #0d2b4f; /* azul escuro */
-    padding: 3rem 1rem;
-    border-bottom-left-radius: 50px;
-    border-bottom-right-radius: 50px;
-    min-height: 50vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.player .info{
+  font-size:14px;
+}
 
-  header h1 {
-    font-size: 3rem;
-    margin-bottom: 0.5rem;
-  }
+.live{
+  color:red;
+  font-weight:bold;
+}
 
-  header p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    text-align: center;
-  }
+/* ESPAÇO PRA NÃO FICAR POR BAIXO DO PLAYER */
+.spacer{
+  height:70px;
+}
 
-  .plans-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    width: 100%;
-    max-width: 1200px;
-    margin-top: 2rem;
-  }
+/* PIX */
+.pix{
+  text-align:center;
+  padding:40px 20px;
+}
 
-  .plan-card {
-    background-color: rgba(255,255,255,0.1);
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: transform 0.3s, background-color 0.3s;
-    text-align: center;
-  }
+.pix textarea{
+  width:90%;
+  height:100px;
+}
 
-  .plan-card:hover {
-    transform: translateY(-5px);
-    background-color: rgba(255,255,255,0.2);
-  }
+.pix img{
+  margin-top:20px;
+}
 
-  .plan-card h2 {
-    margin-top: 0;
-    color: #fff;
-  }
-
-  .plan-card ul {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-  }
-
-  .plan-card li {
-    margin: 0.5rem 0;
-  }
-
-  .plan-card .price-btn {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.7rem 1.5rem;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #0d2b4f;
-    background-color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: transform 0.3s, background-color 0.3s;
-  }
-
-  .plan-card .price-btn:hover {
-    transform: scale(1.05);
-    background-color: #f0f0f0;
-  }
-
-  /* Diferenciais em grid cards */
-  .features-grid {
-    max-width: 1000px;
-    margin: 3rem auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    padding: 0 1rem;
-  }
-
-  .feature-card {
-    background-color: rgba(255,255,255,0.1);
-    padding: 1.5rem;
-    border-radius: 10px;
-    text-align: center;
-    font-weight: bold;
-    transition: transform 0.3s, background-color 0.3s;
-  }
-
-  .feature-card:hover {
-    transform: translateY(-5px);
-    background-color: rgba(255,255,255,0.2);
-  }
-
-  .feature-card h3 {
-    margin: 0 0 1rem 0;
-    color: #0d2b4f;
-  }
-
-  .contact {
-    background-color: rgba(0,0,0,0.7);
-    text-align: center;
-    padding: 2rem 1rem;
-  }
-
-  .contact h2 {
-    color: #1e90ff;
-    margin-bottom: 1rem;
-  }
-
-  .contact a {
-    display: inline-block;
-    margin: 0 1rem;
-    transition: transform 0.3s;
-  }
-
-  .contact a img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .contact a:hover {
-    transform: scale(1.2);
-  }
-
-  footer {
-    text-align: center;
-    padding: 1rem;
-    background-color: rgba(0,0,0,0.8);
-  }
+/* RESTO */
+.section{
+  padding:40px;
+  text-align:center;
+}
 </style>
 </head>
+
 <body>
 
-<div class="topo">
-  <header>
-    <h1>Web Rádio</h1>
-    <p>Escolha o plano ideal e comece sua transmissão agora!</p>
-  </header>
-
-  <section class="plans-grid">
-    <div class="plan-card">
-      <h2>Plano Iniciante</h2>
-      <ul>
-        <li>250 ouvintes</li>
-        <li>3GB de Auto DJ</li>
-        <li>Streaming estável</li>
-      </ul>
-      <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 50</a>
-    </div>
-
-    <div class="plan-card">
-      <h2>Plano Super</h2>
-      <ul>
-        <li>500 ouvintes</li>
-        <li>5GB Radio + App + Player + Xat</li>
-      </ul>
-      <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 100</a>
-    </div>
-
-    <div class="plan-card">
-      <h2>Plano Ouro</h2>
-      <ul>
-        <li>8GB Site + Rádio + Player + Chat + App Android</li>
-      </ul>
-      <a href="https://xat.com/ipokemonzin" class="price-btn">R$ 150</a>
-    </div>
-  </section>
+<!-- PLAYER -->
+<div class="player">
+  <button onclick="toggleRadio()">▶️ Play</button>
+  <div class="info">
+    <span id="status">Carregando...</span><br>
+    <span id="musica">---</span>
+  </div>
 </div>
 
-<section class="features-grid">
-  <div class="feature-card">
-    <h3>Transmissão 24h</h3>
-    Transmissão sem travar com a logo
-  </div>
-  <div class="feature-card">
-    <h3>Aplicativo Android</h3>
-    App disponível com a logo
-  </div>
-  <div class="feature-card">
-    <h3>Chat Interativo</h3>
-    Interação com ouvintes com a logo
-  </div>
-  <div class="feature-card">
-    <h3>Player Web Rádio</h3>
-    Alta qualidade de áudio
-  </div>
-</section>
+<div class="spacer"></div>
 
-<section class="contact">
-  <h2>Fale Conosco</h2>
-  <a href="https://wa.me/SEUNUMERO" target="_blank">
-    <img src="https://xatimg.com/image/kEcot6KRK8Vv.png" alt="WhatsApp">
-  </a>
-  <a href="https://instagram.com/SEUUSUARIO" target="_blank">
-    <img src="https://xatimg.com/image/cDQNycXa7LIN.png" alt="Instagram">
-  </a>
-  <a href="https://xat.com/SEUXAT" target="_blank">
-    <img src="https://xatimg.com/image/S1jnYz4ybVSp.png" alt="Xat">
-  </a>
-</section>
+<!-- PIX -->
+<div class="pix">
+  <h2>💰 Pagamento via PIX</h2>
 
-<footer>
-  &copy; 2026 Web Rádio. Todos os direitos reservados.
-</footer>
+  <textarea readonly id="pixCode">
+00020101021226850014br.gov.bcb.pix2563qrcodepix.bb.com.br/pix/v2/bf62491c-2761-48e9-808e-f47e39ec6b485204000053039865406150.005802BR5925JULIO_CESAR_SUPRIANO_DE_S6015PALMEIRAS_DE_GO62070503***630445D6
+  </textarea>
+
+  <br>
+  <button onclick="copiarPix()">📋 Copiar PIX</button>
+
+  <div id="qrcode"></div>
+</div>
+
+<div class="section">
+  <h2>🎧 Sua Rádio 24h Online</h2>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+let audio = new Audio("https://stm.igng.com.br:7018/stream");
+let tocando = false;
+
+function toggleRadio(){
+  if(!tocando){
+    audio.play();
+    tocando = true;
+    event.target.innerText = "⏸️ Pause";
+  }else{
+    audio.pause();
+    tocando = false;
+    event.target.innerText = "▶️ Play";
+  }
+}
+
+/* GERAR QR CODE PIX */
+new QRCode(document.getElementById("qrcode"), {
+  text: document.getElementById("pixCode").value.trim(),
+  width: 200,
+  height: 200
+});
+
+/* COPIAR PIX */
+function copiarPix(){
+  let pix = document.getElementById("pixCode");
+  pix.select();
+  document.execCommand("copy");
+  alert("PIX copiado!");
+}
+
+/* API RADIO (NOME DA MUSICA + AO VIVO) */
+async function atualizar(){
+  try{
+    let res = await fetch("https://stm.igng.com.br:7018/status-json.xsl");
+    let data = await res.json();
+
+    let source = data.icestats.source;
+
+    if(source.title){
+      document.getElementById("musica").innerText = source.title;
+    }
+
+    /* AO VIVO */
+    if(source.listeners > 0){
+      document.getElementById("status").innerHTML = "🔴 AO VIVO";
+      document.getElementById("status").classList.add("live");
+    }else{
+      document.getElementById("status").innerHTML = "🟢 ONLINE";
+    }
+
+  }catch(e){
+    document.getElementById("status").innerText = "Offline";
+  }
+}
+
+setInterval(atualizar, 5000);
+atualizar();
+</script>
 
 </body>
 </html>
