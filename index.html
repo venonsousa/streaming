@@ -1,59 +1,245 @@
-<div style="
-background:linear-gradient(135deg,#ffd700,#ffae00);
-color:#000;
-padding:30px;
-border-radius:20px;
-width:280px;
-text-align:center;
-box-shadow:0 10px 35px rgba(0,0,0,0.6);
-">
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rádio Premium</title>
 
-<h3 style="margin:0;font-size:22px;">👑 Plano OURO</h3>
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#0f0f0f;
+  color:#fff;
+}
 
-<h1 style="font-size:40px;margin:10px 0;">R$ 149,90</h1>
-<p style="margin:0 0 20px 0;">/mês</p>
+/* HEADER */
+header{
+  background:#121212;
+  padding:15px;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+}
 
-<ul style="list-style:none;padding:0;text-align:left;font-size:14px">
+/* HERO */
+.hero{
+  text-align:center;
+  padding:60px 20px;
+}
 
-<li>🎵 Qualidade máxima (320kbps)</li>
-<li>🚫 Sem anúncios</li>
-<li>👑 Suporte VIP 24h</li>
-<li>🎤 Conteúdo exclusivo</li>
-<li>⬇ Download de músicas</li>
-<li>♾ Ouvintes ilimitados</li>
+.hero h1{
+  font-size:40px;
+}
 
+/* PLANOS */
+.planos{
+  padding:50px 20px;
+  text-align:center;
+}
+
+.cards{
+  display:flex;
+  flex-wrap:wrap;
+  gap:20px;
+  justify-content:center;
+}
+
+/* CARD BASE */
+.card{
+  padding:25px;
+  border-radius:20px;
+  width:260px;
+  text-align:center;
+}
+
+/* BASIC */
+.basic{
+  background:#1c1c1c;
+}
+
+/* PRO */
+.pro{
+  background:#1db954;
+  color:#000;
+  transform:scale(1.05);
+}
+
+/* OURO */
+.gold{
+  background:linear-gradient(135deg,#ffd700,#ffae00);
+  color:#000;
+}
+
+/* BOTÃO */
+button{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* LOGIN */
+.login{
+  padding:40px;
+  text-align:center;
+}
+
+input{
+  padding:10px;
+  margin:5px;
+  width:220px;
+  border:none;
+  border-radius:8px;
+}
+
+/* FOOTER */
+footer{
+  background:#121212;
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+  font-size:14px;
+  color:#aaa;
+}
+
+/* WHATS */
+.whatsapp{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#25D366;
+  padding:15px;
+  border-radius:50%;
+  text-decoration:none;
+  color:#fff;
+  font-size:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🎧 Rádio Premium</header>
+
+<section class="hero">
+<h1>Sua Rádio Online 24h</h1>
+<p>Qualidade profissional • Streaming estável • Sem travamentos</p>
+</section>
+
+<section class="planos">
+
+<h2>Escolha seu Plano</h2>
+
+<div class="cards">
+
+<!-- BASICO -->
+<div class="card basic">
+<h3>Básico</h3>
+<h1>R$49,90</h1>
+
+<ul style="list-style:none;padding:0;text-align:left">
+<li>✅ Áudio padrão</li>
+<li>✅ Player web</li>
+<li>✅ Suporte básico</li>
+<li>👥 100 ouvintes</li>
 </ul>
 
-<br>
+<button style="background:#1db954;color:#fff;" onclick="comprar()">Contratar</button>
+</div>
 
-<a href="https://mpago.la/SEU_LINK_PIX" target="_blank">
-<button style="
-width:100%;
-padding:12px;
-background:#000;
-color:#fff;
-border:none;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-">
-Assinar com PIX
-</button>
-</a>
+<!-- PRO -->
+<div class="card pro">
+<h3>🔥 PRO</h3>
+<h1>R$99,90</h1>
 
-<a href="https://wa.me/5599999999999?text=Contratei%20o%20Plano%20OURO" target="_blank">
-<button style="
-width:100%;
-padding:10px;
-margin-top:10px;
-background:#fff;
-color:#000;
-border:none;
-border-radius:10px;
-cursor:pointer;
-">
-Já paguei
-</button>
-</a>
+<ul style="list-style:none;padding:0;text-align:left">
+<li>✅ Áudio HD</li>
+<li>✅ Menos anúncios</li>
+<li>✅ Suporte prioritário</li>
+<li>👥 500 ouvintes</li>
+</ul>
+
+<button style="background:#000;color:#fff;" onclick="comprar()">Assinar</button>
+</div>
+
+<!-- OURO -->
+<div class="card gold">
+<h3>👑 OURO</h3>
+<h1>R$149,90</h1>
+
+<ul style="list-style:none;padding:0;text-align:left">
+<li>🎵 Qualidade máxima</li>
+<li>🚫 Sem anúncios</li>
+<li>👑 Suporte VIP</li>
+<li>⬇ Downloads</li>
+<li>♾ Ilimitado</li>
+</ul>
+
+<button style="background:#000;color:#fff;" onclick="comprar()">Assinar</button>
+</div>
 
 </div>
+
+</section>
+
+<!-- LOGIN -->
+<section class="login">
+
+<h2>Área do Cliente</h2>
+
+<input id="user" placeholder="Usuário"><br>
+<input id="pass" type="password" placeholder="Senha"><br>
+
+<button onclick="login()">Entrar</button>
+<button onclick="register()">Cadastrar</button>
+
+<p id="msg"></p>
+
+</section>
+
+<!-- WHATS -->
+<a href="https://wa.me/5599999999999?text=Preciso%20de%20suporte" class="whatsapp">💬</a>
+
+<!-- FOOTER -->
+<footer>
+🎧 Rádio Premium <br>
+© 2026 Todos os direitos reservados
+</footer>
+
+<script>
+function comprar(){
+  window.open("https://mpago.la/SEU_LINK_PIX");
+}
+
+async function login(){
+  let res = await fetch("http://localhost:3000/login",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      user:user.value,
+      pass:pass.value
+    })
+  });
+  let data = await res.json();
+  msg.innerText = data.msg;
+}
+
+async function register(){
+  let res = await fetch("http://localhost:3000/register",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({
+      user:user.value,
+      pass:pass.value
+    })
+  });
+  let data = await res.json();
+  msg.innerText = data.msg;
+}
+</script>
+
+</body>
+</html>
